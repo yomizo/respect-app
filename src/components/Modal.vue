@@ -60,11 +60,9 @@
       }
     },
     methods: {
-      //vuex state.dialog update
+      //vuex state.dialog update & add_marker
       doUpdate(message) {
-        // this.marker.setMap(null) // delete tmp marker
-        // console.log(this.map)
-        // this.marker.icon = 'fight55.png'
+        // add_marker and delete tmpMarker
         if (this.messages[0].toggle) {
           this.marker.setIcon(this.messages[0].src)
           this.messages[0].toggle = false
@@ -74,8 +72,10 @@
         } else {
           this.marker.setMap(null)
         }
+        //state.dialog update
         this.$store.dispatch('doUpdate', [null, null])
       },
+      //set this.messages[0~1].toggle
       toggle(message){
         if(message.name == "Fight!"){
           this.messages[0].toggle = !this.messages[0].toggle
