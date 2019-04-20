@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# coding:utf-8
 
 users = (1..50).map do
   User.create!(
@@ -17,11 +18,11 @@ end
 
 posts = (1..100).map do
   Post.create!(
-    user_id: rand(1..50),
     respect: rand(0..1),
     lat: rand(-35..-11),
     lng: rand(111..152),
-    comment: Faker::String.random(1..20)
+    user_id: rand(1..50),
+    comment: Faker::Lorem.paragraph(2)
   )
 end
 
@@ -31,3 +32,4 @@ metoos = (1..100).map do
     post_id: rand(1..100)
   )
 end
+

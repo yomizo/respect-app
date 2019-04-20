@@ -9,7 +9,7 @@ class MetooSerializer < ActiveModel::Serializer
 
   def post
     return unless object.post
-    instance_options[:without_serializer] ? object.post : UserSerializer.new(object.post, without_serializer: true)
+    instance_options[:without_serializer] ? object.post : PostSerializer.new(object.post, without_serializer: true)
   end  
 
 end
