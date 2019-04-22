@@ -2,6 +2,7 @@
   <div id="map"></div>
 </template>
 
+
 <script>
 export default {
   data(){
@@ -30,19 +31,20 @@ export default {
           name: 'Info',
           icon: 'heart55.png'
         },        
-      }
+      },
     }
   },
   methods:{
     //vuex state.dialog update
     raiseDialog(tempMarker) {
-      this.$store.dispatch('doUpdate', [tempMarker, map])
-    },  
+      this.$store.dispatch('setDialog', [tempMarker, map])
+    },
+
     culPosition: function(lat, lng) {
       return new google.maps.LatLng(lat, lng)
     },
+
     makeMarker: function(latLng, map) {
-      console.log(latLng.lat())
       // make TEMP marker
       var tempMarker = new google.maps.Marker({
         position: latLng,
@@ -54,24 +56,30 @@ export default {
       
       this.raiseDialog(tempMarker, map) // raise modal
       
-      // // remove TEMP marker
-      // if (dialog == false) {
-      //   marker.setMap(null)
-      // }
       // marker.addListener('click', function(e){
       //   console.log("addmarker clicked")
       // })
-    }
+    },
+
+    
   },
   computed: {
     dialog: {
       get() { return this.$store.getters.dialog },
-      set() { this.$store.dispatch('doUpdate') }
+      // set() { this.$store.dispatch('doUpdate') }
     },
     marker: {
       get() { return this.$store.getters.marker },
-      // set() { this.$store.dispatch('doUpdate') }
     },
+    search_list: {
+      get() { return this.$store.getters.search_list },
+    },    
+  },
+  
+  //Life cycle
+  created(){
+    // get posts_json
+    this.$store.dispatch('setPosts', ['/posts'])
   },  
   mounted(){
     //initMap
@@ -98,9 +106,11 @@ export default {
     this.map.addListener('click', function(e){
       self.makeMarker(e.latLng, self.map) //will change that popup modal
     })
-  }
+  },
 }
 </script>
+
+
 <style>
 #map {
   margin-top: 40px;
