@@ -11,7 +11,7 @@ export default {
       markers: [],
       iconBase: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/',
       center: {lat: -25.363,lng: 131.044},
-      zoom: 8,
+      zoom: 6,
       features:  [
         {
           position: this.culPosition(-25.365, 131.340),
@@ -23,14 +23,8 @@ export default {
         },        
       ],
       icons: {
-        parking: {
-          name: 'Parking',
-          icon: 'fight55.png'
-        },
-        info: {
-          name: 'Info',
-          icon: 'heart55.png'
-        },        
+        cheer: 'fight55.png',
+        thanks: 'heart55.png',
       },
     }
   },
@@ -71,14 +65,14 @@ export default {
     marker: {
       get() { return this.$store.getters.marker },
     },
-    search_list: {
-      get() { return this.$store.getters.search_list },
+    searchList: {
+      get() { return this.$store.getters.searchList },
     },    
   },
   
   //Life cycle
-  created(){
-    // get posts_json
+  beforeCreate(){
+    // set posts_json
     this.$store.dispatch('setPosts', ['/posts'])
   },  
   mounted(){
@@ -88,11 +82,15 @@ export default {
       zoom: this.zoom
     })
 
-    // make marker gio 
-    for (var i = 0; i < this.features.length; i++) {
+    
+    // Check the searchList is null?
+    
+
+    // Allocate marker on the map
+    for (var i = 0; i < this.searchList.length; i++) {
       var marker = new google.maps.Marker({
-        position: this.features[i].position,
-        icon: this.icons[this.features[i].type].icon,
+        position: {lat: this.searchList[i].lat, lng: this.searchList[i].lng},
+        icon: this.icons[this.searchList[i].respect],
         map: this.map
       })
       // marker click event listen
@@ -100,6 +98,7 @@ export default {
         console.log("marker clicked")
       })
     }
+
 
     //map click event listen
     var self = this

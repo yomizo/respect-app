@@ -43,6 +43,8 @@ const store = new Vuex.Store({
         axios.get(URL_BASE + payload.url)
         .then((res) => {
           state.searchList = res.data.posts
+          console.log(state.searchList)
+          console.log(Array.isArray(state.searchList))
         }).catch((error) => {
           console.log(error)
       })
