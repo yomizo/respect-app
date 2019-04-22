@@ -23,7 +23,7 @@
             round
             dark
             color="orange darken-1"
-            @click="doUpdate"
+            @click="isOk"
           >
             Cancel
           </v-btn>
@@ -31,7 +31,7 @@
             round
             dark
             color="orange darken-1"
-            @click="doUpdate"
+            @click="isOk"
           >
             OK!
           </v-btn>
@@ -61,7 +61,7 @@
     },
     methods: {
       //vuex state.dialog update & add_marker
-      doUpdate(message) {
+      isOk(message) {
         // add_marker and delete tmpMarker
         if (this.messages[0].toggle) {
           this.marker.setIcon(this.messages[0].src)
@@ -73,7 +73,7 @@
           this.marker.setMap(null)
         }
         //state.dialog update
-        this.$store.dispatch('doUpdate', [null, null])
+        this.$store.dispatch('setDialog', [null, null])
       },
       //set this.messages[0~1].toggle
       toggle(message){
@@ -87,13 +87,13 @@
       }
     },
     computed: {
+      // defined vuex(store) variable
       dialog: {
         get() { return this.$store.getters.dialog },
-        set() { this.$store.dispatch('doupdate', null) }
+        set() { this.$store.dispatch('setDialog', null) }
       },
       marker: {
         get() { return this.$store.getters.marker },
-        // set() { this.$store.dispatch('doupdate', null) }
       },
       map: {
         get() { return this.$store.getters.map }
