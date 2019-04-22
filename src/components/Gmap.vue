@@ -75,30 +75,13 @@ export default {
     // set posts_json
     this.$store.dispatch('setPosts', ['/posts'])
   },  
+
   mounted(){
     //initMap
     this.map = new google.maps.Map(document.getElementById('map'),{
       center: this.center,
       zoom: this.zoom
-    })
-
-    
-    // Check the searchList is null?
-    
-
-    // Allocate marker on the map
-    for (var i = 0; i < this.searchList.length; i++) {
-      var marker = new google.maps.Marker({
-        position: {lat: this.searchList[i].lat, lng: this.searchList[i].lng},
-        icon: this.icons[this.searchList[i].respect],
-        map: this.map
-      })
-      // marker click event listen
-      marker.addListener('click', function(e){
-        console.log("marker clicked")
-      })
-    }
-
+    })  
 
     //map click event listen
     var self = this
@@ -106,6 +89,27 @@ export default {
       self.makeMarker(e.latLng, self.map) //will change that popup modal
     })
   },
+
+
+  watch: {
+    // After searchList is fill, allocate marker
+    searchList: function(newVal, oldVal) {
+      self = this
+      if(newVal){
+        newVal.forEach(function(post) {
+          var marker = new google.maps.Marker({
+            position: {lat: post.lat, lng: post.lng},
+            icon: self.icons[post.respect],
+            map: self.map
+          })
+          // Set marker click event listener
+          marker.addListener('click', function(e){
+            console.log("marker clicked")
+          })          
+        })
+      }
+    }
+  }
 }
 </script>
 
