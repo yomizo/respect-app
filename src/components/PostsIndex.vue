@@ -1,17 +1,7 @@
 <template>
   <v-list two-line>
     <template v-for="(post, index) in searchList">
-      <!-- <v-subheader
-        v-if="item.header"
-        :key="item.header"
-      >
-        {{ item.header }}
-      </v-subheader> -->
-
-      <v-divider></v-divider>
-
       <v-list-tile
-        
         :key="post.id"
         avatar
         @click=""
@@ -25,6 +15,7 @@
           <v-list-tile-sub-title v-html="post.comment"></v-list-tile-sub-title>
         </v-list-tile-content>
       </v-list-tile>
+      <v-divider></v-divider>
     </template>
   </v-list>
 </template>
