@@ -12,16 +12,6 @@ export default {
       iconBase: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/',
       center: {lat: -25.363,lng: 131.044},
       zoom: 6,
-      features:  [
-        {
-          position: this.culPosition(-25.365, 131.340),
-          type: 'info'
-        },
-        {
-          position: this.culPosition(-25.560, 131.030),
-          type: 'parking'
-        },        
-      ],
       icons: {
         cheer: 'fight55.png',
         thanks: 'heart55.png',
