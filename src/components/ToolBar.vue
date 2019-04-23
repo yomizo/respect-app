@@ -10,11 +10,11 @@
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn
           class="grey--text--darken-3" 
-          v-for="(mn, i) in items" 
+          v-for="(btn, i) in btns" 
           :key="i"  
-          :href="mn.href"
+          :to="btn.href"
           flat>
-          {{mn.title}}
+          {{btn.title}}
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -28,10 +28,10 @@
       title: "Respect!",
       subtitle:"",
       drawer: false,
-      items: [
-        { title: 'About', icon: 'question_answer', href:'#about' },
-        { title: 'Login', icon: 'dashboard', href:'#login' },
-        { title: 'Signin', icon: 'question_answer', href:'#signin' },
+      btns: [
+        { title: 'About', icon: 'question_answer', href:'/' },
+        { title: 'SignUp', icon: 'dashboard', href:'/signup' },
+        { title: 'SignIn', icon: 'question_answer', href:'/signin' },
         { title: 'Mypage', icon: 'question_answer', href:'#mypage' },        
       ],
       mini: false,

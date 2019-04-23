@@ -1,15 +1,16 @@
 <template>
   <v-app>
     <Toolbar/>
-    <v-layout row>
+    <!-- <v-layout row>
       <v-flex class="hidden-md-and-down" lg3 pa-2 pt-5>
         <PostsIndex/>
       </v-flex>
       <v-flex>
         <Gmap/>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
     <Modal/>
+    <router-view></router-view>
   </v-app>
 </template>
 
