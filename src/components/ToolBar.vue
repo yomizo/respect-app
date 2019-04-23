@@ -1,8 +1,7 @@
 <template>
-  <v-layout>
     <v-toolbar app fixed dense clipped-left class="pink lighten-5">
       <v-toolbar-items class="text-uppercase">
-        <v-btn flat class="headline grey--text--darken-3 font-weight-bold" href="#top">
+        <v-btn flat class="headline grey--text--darken-3 font-weight-bold" href="/">
           {{title}}
         </v-btn>
       </v-toolbar-items>
@@ -18,7 +17,6 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-  </v-layout>
 </template>
 
 <script>
@@ -29,19 +27,14 @@
       subtitle:"",
       drawer: false,
       btns: [
-        { title: 'About', icon: 'question_answer', href:'/' },
+        { title: 'Map', icon: 'question_answer', href:'/' },
         { title: 'SignUp', icon: 'dashboard', href:'/signup' },
         { title: 'SignIn', icon: 'question_answer', href:'/signin' },
-        { title: 'Mypage', icon: 'question_answer', href:'#mypage' },        
+        { title: 'Mypage', icon: 'question_answer', href:'/mypage' },        
       ],
       mini: false,
       right: null
     }),
-    methods: {
-      doUpdate(event) {
-        this.$store.dispatch('doUpdate')
-      }
-    }
   }
 </script>
 
