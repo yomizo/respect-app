@@ -10,7 +10,8 @@
 users = (1..50).map do
   User.create!(
     name: Faker::Name.name,
-    password: Faker::Crypto.md5,
+    # password: Faker::Crypto.md5,
+    password: Faker::Lorem.characters(16),
     email: Faker::Internet.email,
     image_name: Faker::File.file_name('path/to')
   )
