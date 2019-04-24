@@ -58,9 +58,6 @@
             max: 'The name field may not be greater than 10 characters'
             // custom messages
           },
-          select: {
-            required: 'Select field is required'
-          }
         }
       }
     }),

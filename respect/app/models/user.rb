@@ -1,6 +1,7 @@
 class User < ApplicationRecord
+  has_secure_password
   has_many :posts
   has_many :metoo
 
-  validates :name, :password, :email, presence: true
+  validates :name, :email, presence: true
 end
