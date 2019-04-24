@@ -48,6 +48,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
+    bcrypt (3.1.12)
     bootsnap (1.4.3)
       msgpack (~> 1.0)
     builder (3.2.3)
@@ -155,6 +156,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   bullet
   byebug
