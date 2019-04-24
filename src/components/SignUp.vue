@@ -80,12 +80,28 @@
 
     methods: {
       submit () {
-        this.$validator.validateAll()
+        var judge
+        this.$validator.validateAll().then((result) => {
+          if(!result) {
+            alert(this.errors.all())
+            return
+          }
+          this.postUser()
+        })
       },
       clear () {
         this.name = ''
         this.email = ''
+        this.password = ''
         this.$validator.reset()
+      },
+      postUser() {
+        var params = {
+          name: this.name, 
+          email: this.email, 
+          password: this.password
+          }
+        this.$store.dispatch('setUser', ['/users', params])
       }
     }
   }

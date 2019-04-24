@@ -16,7 +16,7 @@ module V1
       if user.save
         render json: user, adapter: :json, status: 201
       else
-        render json: { error: user.errors }, status: 422
+        render json: { error: user.errors}, status: 422
       end
     end
 

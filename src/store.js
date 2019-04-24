@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     map: null,
     marker: null,
     searchList: null,
+    flash: null,
   },
 
   getters: {
@@ -29,6 +30,9 @@ const store = new Vuex.Store({
     },
     searchList(state) {
       return state.searchList
+    },
+    flash(state) {
+      return state.flash
     }
   },
 
@@ -40,14 +44,24 @@ const store = new Vuex.Store({
     },
     //set search_list
     updateSearchList(state, payload) {
-        axios.get(URL_BASE + payload.url)
+      axios.get(URL_BASE + payload.url)
         .then((res) => {
           state.searchList = res.data.posts
-          console.log(state.searchList)
-          console.log(Array.isArray(state.searchList))
         }).catch((error) => {
           console.log(error)
-      })
+        })
+    },
+    updateFlash(state, payload) {
+      axios.post(URL_BASE + payload.url, {
+          user: payload.params
+        })
+        .then((res) => {
+          console.log('Sended' + res.data)
+          state.flash = "Registration is done"
+        }).catch(error => {
+          console.log(error)
+          state.flash = "Registration is false"
+        })
     }
   },
 
@@ -57,6 +71,9 @@ const store = new Vuex.Store({
     },
     setPosts({ commit }, url) {
       commit('updateSearchList', { url })
+    },
+    setUser({ commit }, [url, params]) {
+      commit('updateFlash', { url, params })
     }
   }
 })
