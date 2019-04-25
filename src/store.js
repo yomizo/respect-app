@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from './router.js'
+
 
 const URL_BASE = 'http://localhost:3000'
 //registor as plugin
 Vue.use(Vuex)
 Vue.use(axios)
+Vue.use(router)
 
 //make the store
 const store = new Vuex.Store({
@@ -16,6 +19,7 @@ const store = new Vuex.Store({
     marker: null,
     searchList: null,
     flash: null,
+    isPrivate: false,
   },
 
   getters: {
@@ -33,6 +37,9 @@ const store = new Vuex.Store({
     },
     flash(state) {
       return state.flash
+    },
+    isPrivate(state) {
+      return state.isPrivate
     }
   },
 
@@ -56,11 +63,13 @@ const store = new Vuex.Store({
           user: payload.params
         })
         .then((res) => {
-          console.log('Sended' + res.data)
-          state.flash = "Registration is done"
+          console.log(res)
+          state.flash = "Registration is done" //update flash message
+          router.push('/') //redirect
+          state.isPrivate = true //change private
         }).catch(error => {
           console.log(error)
-          state.flash = "Registration is false"
+          state.flash = "Registration is false" //update flash message
         })
     }
   },
