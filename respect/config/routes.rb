@@ -3,5 +3,6 @@ Rails.application.routes.draw do
     resources :users
     resources :posts
     resources :metoos #, only:[:create, :destroy, :show]
+    post '/signin', to: 'sessions#signin'
   end
 end

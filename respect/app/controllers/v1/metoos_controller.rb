@@ -1,6 +1,7 @@
 module V1
   class MetoosController < ApplicationController
-    before_action :set_metoo, only: [:show, :update, :destroy]
+    before_action :set_metoo, only: [:destroy]
+    before_action :authenticate, except: [:index, :show]
     
     def index
       metoos = Metoo.all
@@ -8,23 +9,15 @@ module V1
     end
 
     def show
-      render json: @metoo, adapter: :json
+      metoo = json: @metoo, adapter: :json
     end
-
+  
     def create
       metoo = Metoo.new(metoo_params)
       if metoo.save
         render json: metoo, adapter: :json, status: 201
       else
         render json: { error: metoo.errors }, status: 422
-      end
-    end
-
-    def update
-      if @metoo.update(metoo_params)
-        render json: @metoo, adapter: :json, status: 200
-      else
-        render json: { error: @metoo.errors }, status: 422
       end
     end
 
@@ -37,6 +30,7 @@ module V1
 
     def set_metoo
       @metoo = Metoo.find(params[:id])
+      authorize @metoo
     end
     # permition
     def metoo_params

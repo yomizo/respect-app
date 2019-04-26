@@ -1,7 +1,9 @@
 module V1
   class UsersController < ApplicationController
     before_action :set_user, only: [:show, :update, :destroy]
+    before_action :authenticate, except: [:index, :create]
     
+
     def index
       users = User.all
       render json: users, adapter: :json
@@ -37,7 +39,9 @@ module V1
 
     def set_user
       @user = User.find(params[:id])
+      authorize @user # pundit_helper
     end
+
     # permition
     def user_params
       params.require(:user).permit(:name, :email, :password, :image_name)

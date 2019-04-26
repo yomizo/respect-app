@@ -1,42 +1,37 @@
 class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
+  include Pundit # permition
 
-  # before_action :authenticate_user
-  
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
-  protected
-
-  def pagination(records)
-    {
-      pagination: {
-        per_page: records.per_page,
-        total_pages: records.total_pages,
-        total_objects: records.total_entries,
-      }
-    }
-  end
-
-  def current_user
-    @user
-  end
+  rescue_from Pundit::NotAuthorizedError, with: :no_authorization
 
 
-  private
-
-  def authenticate_user
-    authenticate_user_with_token || render_unauthorized_request
-  end
-
-  def authenticate_user_with_token
-    authenticate_with_http_token do |token, options|
-      @user = User.find_by(api_key: token)
+  # correct token? or have token?
+  def authenticate
+    if request.headers[:HTTP_AUTHORIZATION] != nil
+      current_user || no_authentication
+    else
+      no_header
     end
   end
 
-  def render_unauthorized_request
-    self.headers['www-Authenticate'] = 'Token realm="Application"'
-    render json: { error: 'Bad credentials' }, status: 401
+  # Searching which does user have token?
+  def current_user
+    authenticate_with_http_token do |token, options|
+      @current_user = User.find_by(token: token) 
+    end
+  end
+
+  def no_header
+    render json: { error: 'No Header' }, status: 400
+  end
+
+  def no_authentication
+    render json: { error: 'No Authentication' }, status: 401
+  end
+
+  def no_authorization
+    render json: { error: 'No Authorization' }, status: 403
   end
 
   def record_not_found

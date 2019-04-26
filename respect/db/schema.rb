@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 2019_04_24_094903) do
     t.string "image_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "api_key"
-    t.index ["api_key"], name: "index_users_on_api_key"
+    t.string "token"
+    t.index ["token"], name: "index_users_on_token"
   end
 
   add_foreign_key "metoos", "posts"

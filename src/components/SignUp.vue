@@ -56,10 +56,10 @@
       name: '',
       email: '',
       password: '',
+      // flash_message_dic
       dictionary: {
         attributes: {
           email: 'E-mail Address'
-          // custom attributes
         },
         custom: {
           name: {
