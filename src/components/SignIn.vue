@@ -86,7 +86,7 @@
           email: this.email, 
           password: this.password
           }
-        this.$store.dispatch('setUser', ['/signin', params])
+        this.$store.dispatch('signinUser', ['/signin', params])
       }
     }
   }

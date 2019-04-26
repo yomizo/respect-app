@@ -1,3 +1,4 @@
+
 <template>
   <v-layout row justify-center >
     <v-dialog
@@ -6,11 +7,11 @@
       persistent
     >
       <v-card class="tp blue-grey lighten-5">
-        <v-card-title class="title">ここにRESPECTしますか？</v-card-title>
-
+        <v-card-title class="title">ここにRESPECt？</v-card-title>
+        <router-link to="/" tag="button">button</router-link>
         <v-card-text class="text-xs-center">
           <v-btn v-for="message in messages" 
-            fab
+            fab 
             @click="toggle(message)"
             >
             <v-avatar size="48">
@@ -23,7 +24,7 @@
             round
             dark
             color="orange darken-1"
-            @click="isCancel"
+            @click="isOk"
           >
             Cancel
           </v-btn>
@@ -60,56 +61,37 @@
       }
     },
     methods: {
-      closeDialog() {
-        this.$store.dispatch('setDialog')
-      },
-
       //vuex state.dialog update & add_marker
-      isOk(msg) {
-        let isDelete = true // just default
+      isOk(message) {
         // add_marker and delete tmpMarker
-        this.messages.forEach((message, i) => {
-          if (message.toggle) {
-            this.marker.setIcon(this.messages[i].src)
-            this.marker.addListener('click', function(e){
-              console.log("addmarker clicked")
-            })
-            isDelete = false // marker isn't deleted
-          }
-          this.messages[i].toggle = false
-        })
-
-        
-        if (isDelete) { this.marker.setMap(null)}
-
-        this.closeDialog()
+        if (this.messages[0].toggle) {
+          this.marker.setIcon(this.messages[0].src)
+          this.messages[0].toggle = false
+        } else if (this.messages[1].toggle) {
+          this.marker.setIcon(this.messages[1].src)
+          this.messages[1].toggle = false
+        } else {
+          this.marker.setMap(null)
+        }
+        //state.dialog update
+        this.$store.dispatch('setDialog', [null, null])
       },
-
-      // push cancel btn
-      isCancel() {
-        this.marker.setMap(null)
-        this.closeDialog()
-        this.messages.forEach((msg,i) =>{
-          this.messages[i].toggle = false
-        })
-      },
-
-      // set this.messages[0~1].toggle
-      toggle(msg){
-        this.messages.forEach( (message, i) => {
-          if (message.name == msg.name ) {
-            this.messages[i].toggle = true
-          } else {
-            this.messages[i].toggle = false
-          }
-        })
+      //set this.messages[0~1].toggle
+      toggle(message){
+        if(message.name == "Fight!"){
+          this.messages[0].toggle = !this.messages[0].toggle
+          if(this.messages[0].toggle){this.messages[1].toggle = false}
+        } else {
+          this.messages[1].toggle = !this.messages[1].toggle
+          if(this.messages[1].toggle){this.messages[0].toggle = false}
+        }
       }
     },
     computed: {
       // defined vuex(store) variable
       dialog: {
         get() { return this.$store.getters.dialog },
-        set() { this.$store.dispatch('setDialog') }
+        set() { this.$store.dispatch('setDialog', null) }
       },
       marker: {
         get() { return this.$store.getters.marker },

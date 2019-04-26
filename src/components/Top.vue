@@ -8,7 +8,8 @@
         <Gmap/>
       </v-flex>
     </v-layout>
-    <PostModal/>
+    <!-- <PostModal/> -->
+    <router-view></router-view>
   </v-container>
 </template>
 

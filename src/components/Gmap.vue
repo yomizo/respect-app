@@ -20,8 +20,9 @@ export default {
   },
   methods:{
     //vuex state.dialog update
-    raiseDialog(tempMarker) {
-      this.$store.dispatch('setDialog', [tempMarker, map])
+    raiseDialog(tempMarker, map) {
+      this.$store.dispatch('setDialog')
+      this.$store.dispatch('setMarker', [tempMarker, map])
     },
 
     culPosition: function(lat, lng) {
@@ -82,7 +83,7 @@ export default {
 
 
   watch: {
-    // After searchList is fill, allocate marker
+    // After searchList is fill, allocate initial markers
     searchList: function(newVal, oldVal) {
       self = this
       if(newVal){
@@ -94,10 +95,20 @@ export default {
           })
           // Set marker click event listener
           marker.addListener('click', function(e){
-            console.log("marker clicked")
+            // get latlng data
+            let latLng = marker.getPosition().toJSON()
+            console.log(latLng)
+
+            // search postData using latlng in searchList
+            let postData = newVal.filter(function(item, i){
+              if (item.lat == latLng.lat && item.lng == latLng.lng) return true
+            })
+            console.log(postData)
+            // this.$router.push({ name: 'post-tmp', params: {}})
           })          
         })
       }
+      console.log(newVal)
     }
   }
 }
