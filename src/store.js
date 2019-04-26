@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from './router.js'
+import createPersistedState from "vuex-persistedstate";
 
 const URL_BASE = 'http://localhost:3000'
 //registor as plugin
 Vue.use(Vuex)
 Vue.use(axios)
+Vue.use(router)
 
 //make the store
 const store = new Vuex.Store({
@@ -16,6 +19,8 @@ const store = new Vuex.Store({
     marker: null,
     searchList: null,
     flash: null,
+    isPrivate: false,
+    token: '',
   },
 
   getters: {
@@ -33,6 +38,9 @@ const store = new Vuex.Store({
     },
     flash(state) {
       return state.flash
+    },
+    isPrivate(state) {
+      return state.isPrivate
     }
   },
 
@@ -51,16 +59,20 @@ const store = new Vuex.Store({
           console.log(error)
         })
     },
+    // signup & signin
     updateFlash(state, payload) {
       axios.post(URL_BASE + payload.url, {
           user: payload.params
         })
         .then((res) => {
-          console.log('Sended' + res.data)
-          state.flash = "Registration is done"
+          console.log(res.data)
+          state.flash = "Registration is done" //update flash message
+          router.push('/') //redirect
+          state.isPrivate = true //change private
+          state.token = res.data
         }).catch(error => {
           console.log(error)
-          state.flash = "Registration is false"
+          state.flash = "Registration is false" //update flash message
         })
     }
   },
@@ -75,7 +87,13 @@ const store = new Vuex.Store({
     setUser({ commit }, [url, params]) {
       commit('updateFlash', { url, params })
     }
-  }
+  },
+
+  // for sessionStorage
+  plugins: [createPersistedState({
+    storage: window.sessionStorage,
+    key: 'Respects!'
+  })]
 })
 
 

@@ -1,7 +1,8 @@
 module V1
   class PostsController < ApplicationController
-    before_action :set_post, only: [:show, :update, :destroy]
-    
+    before_action :set_post, only: [:update, :destroy]
+    before_action :authenticate, except: [:index, :show]
+
     def index
       posts = Post.all
       render json: posts, adapter: :json
@@ -37,6 +38,7 @@ module V1
 
     def set_post
       @post = Post.find(params[:id])
+      authorize @post
     end
     # permition
     def post_params
