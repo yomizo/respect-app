@@ -30,7 +30,7 @@
         { title: 'Map', icon: 'question_answer', href:'/' },
         { title: 'SignUp', icon: 'dashboard', href:'/signup' },
         { title: 'SignIn', icon: 'question_answer', href:'/signin' },
-        { title: 'Mypage', icon: 'question_answer', href:'/mypage' },        
+        { title: 'Mypage', icon: 'question_answer', href:'/post-tmp' },        
       ],
       mini: false,
       right: null

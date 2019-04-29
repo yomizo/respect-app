@@ -7,36 +7,23 @@
       persistent
     >
       <v-card class="tp blue-grey lighten-5">
-        <v-card-title class="title">ここにRESPECt？</v-card-title>
-        <router-link to="/" tag="button">button</router-link>
+        <v-card-title class="title">{{postData.id}}:{{postData.respect}}</v-card-title>
         <v-card-text class="text-xs-center">
-          <v-btn v-for="message in messages" 
-            fab 
-            @click="toggle(message)"
-            >
-            <v-avatar size="48">
-              <img :src="message.src" alt="avatar">
-            </v-avatar>
+          <v-avatar size="36">
+            <img :src="require('../assets/yomizou_face.png')" alt="avatar">
+          </v-avatar>
+          {{postData.user.name}}
+        </v-card-text>
+        <v-card-text class="text-xs-center">
+          {{postData.comment}}
+        </v-card-text>
+        <v-card-text>
+          <v-btn @click="closeDialog" icon 
+            color="pink accent-2"
+            right small>
+            <v-icon>close</v-icon>
           </v-btn>
         </v-card-text>
-        <div class="text-xs-center">
-          <v-btn
-            round
-            dark
-            color="orange darken-1"
-            @click="isOk"
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            round
-            dark
-            color="orange darken-1"
-            @click="isOk"
-          >
-            OK!
-          </v-btn>
-        </div>
       </v-card>
     </v-dialog>
   </v-layout>
@@ -85,7 +72,11 @@
           this.messages[1].toggle = !this.messages[1].toggle
           if(this.messages[1].toggle){this.messages[0].toggle = false}
         }
-      }
+      },
+      closeDialog() {
+        this.$store.dispatch('setDialog')
+        this.$router.push('/')
+      },
     },
     computed: {
       // defined vuex(store) variable
@@ -98,6 +89,9 @@
       },
       map: {
         get() { return this.$store.getters.map }
+      },
+      postData: {
+        get() { return this.$store.getters.postData }
       }
     }
   

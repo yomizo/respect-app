@@ -13,11 +13,6 @@ module V1
 
     private
 
-    # def signin_user
-    #   @user = User.find_by(email: signin_params[:email])
-    #   authorize @user
-    # end
-
     def signin_params
       params.require(:user).permit(:email, :password)
     end

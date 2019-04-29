@@ -8,7 +8,6 @@
         <Gmap/>
       </v-flex>
     </v-layout>
-    <!-- <PostModal/> -->
     <router-view></router-view>
   </v-container>
 </template>
@@ -17,11 +16,10 @@
 <script>
 import Gmap from './Gmap'
 import PostsIndex from './PostsIndex'
-import PostModal from './Modal'
 
 export default {
   components: {
-    Gmap, PostsIndex, PostModal
+    Gmap, PostsIndex
   }
 }
 </script>

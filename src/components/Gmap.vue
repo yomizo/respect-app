@@ -37,7 +37,7 @@ export default {
       })
 
       map.panTo(latLng) // move center to clicked place
-      map.panBy(0, 150) // offset below
+      map.panBy(0, 170) // offset below
       
       this.raiseDialog(tempMarker, map) // raise modal
       
@@ -93,22 +93,21 @@ export default {
             icon: self.icons[post.respect],
             map: self.map
           })
-          // Set marker click event listener
+          // show postData when marker clicked
           marker.addListener('click', function(e){
             // get latlng data
-            let latLng = marker.getPosition().toJSON()
-            console.log(latLng)
+            let latLng = e.latLng.toJSON()
 
             // search postData using latlng in searchList
             let postData = newVal.filter(function(item, i){
               if (item.lat == latLng.lat && item.lng == latLng.lng) return true
             })
-            console.log(postData)
-            // this.$router.push({ name: 'post-tmp', params: {}})
+            self.$store.dispatch('setPostData', postData[0])
+            self.$store.dispatch('setDialog')
+            self.$router.push('/postshow') //redirect
           })          
         })
       }
-      console.log(newVal)
     }
   }
 }
