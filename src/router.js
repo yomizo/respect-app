@@ -6,7 +6,8 @@ import Top from './components/Top.vue'
 import SignIn from './components/SignIn.vue'
 import SignUp from './components/SignUp.vue'
 import Post from "./components/Post"
-import PostShow from "./components/PostShow";
+import PostShow from "./components/PostShow"
+import PostEdit from "./components/PostEdit";
 
 // regist as plugin
 Vue.use(VueRouter)
@@ -20,6 +21,7 @@ const router = new VueRouter({
       children: [
         { name: "post", path: "", component: Post },
         { name: "postshow", path: "postshow", component: PostShow },
+        { name: "postedit", path: "postedit", component: PostEdit }
       ]
     },
     { path: "/signin", component: SignIn },

@@ -20,7 +20,7 @@ const store = new Vuex.Store({
     flash: null,
     isPrivate: false,
     token: "",
-    postData: null,
+    postData: null
   },
 
   getters: {
@@ -49,6 +49,7 @@ const store = new Vuex.Store({
     token(state) {
       return state.token;
     }
+    //#######develop only###########
   },
 
   mutations: {
@@ -60,8 +61,7 @@ const store = new Vuex.Store({
       state.map = payload.map;
     },
     updatePostData(state, payload) {
-      state.postData = payload.postData
-      console.log(state.postData)
+      state.postData = payload.postData;
     },
 
     //set search_list
@@ -77,7 +77,7 @@ const store = new Vuex.Store({
     },
 
     // signup
-    register(state, payload) {
+    signup(state, payload) {
       axios
         .post(URL_BASE + payload.url, {
           user: payload.params
@@ -118,10 +118,10 @@ const store = new Vuex.Store({
     createPost(state, payload) {
       // axios.defaults.headers.common['Authorization'] = state.token
       axios
-        .post(URL_BASE + payload.url, {
-          post: payload.params
-        },
-          { headers: { "Authorization": `Token ${state.token}` } }
+        .post(
+          URL_BASE + payload.url,
+          { post: payload.params },
+          { headers: { Authorization: `Token ${state.token}` } }
         )
         .then(res => {
           // console.log(res.data);
@@ -132,6 +132,38 @@ const store = new Vuex.Store({
           console.log(error);
           state.flash = "Post is failed";
         });
+    },
+
+    // destroy post
+    deletePost(state, payload) {
+      axios
+        .delete(
+          URL_BASE + payload.url,
+          { headers: { Authorization: `Token ${state.token}` } }
+        )
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    },
+
+    // update post's comment
+    editPost(state, payload) {
+      state.postData.comment = payload.comment
+      axios
+        .patch(URL_BASE + payload.url,
+          { post: state.postData },
+          { headers: { Authorization: `Token ${state.token}`} }
+        )
+        .then(res => {
+        
+        })
+        .catch(error => {
+        
+        })
+
     }
   },
 
@@ -147,16 +179,22 @@ const store = new Vuex.Store({
       commit("updateSearchList", { url });
     },
     setPostData({ commit }, postData) {
-      commit("updatePostData", { postData })
+      commit("updatePostData", { postData });
     },
     registerUser({ commit }, [url, params]) {
-      commit("register", { url, params })
+      commit("signup", { url, params });
     },
     signinUser({ commit }, [url, params]) {
-      commit("signin", { url, params })
+      commit("signin", { url, params });
     },
     createPost({ commit }, [url, params]) {
       commit("createPost", { url, params })
+    },
+    deletePost({ commit }, url) {
+      commit("deletePost", { url })
+    },
+    editPost({ commit }, [url, comment]) {
+      commit("editPost", {url, comment})
     }
   }
 

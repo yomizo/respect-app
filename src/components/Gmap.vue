@@ -96,11 +96,11 @@ export default {
           // show postData when marker clicked
           marker.addListener('click', function(e){
             // get latlng data
-            let latLng = e.latLng.toJSON()
-
+            let latLng = e.latLng
             // search postData using latlng in searchList
             let postData = newVal.filter(function(item, i){
-              if (item.lat == latLng.lat && item.lng == latLng.lng) return true
+              let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
+              if (storedLatLng.equals(latLng)) return true
             })
             self.$store.dispatch('setPostData', postData[0])
             self.$store.dispatch('setDialog')

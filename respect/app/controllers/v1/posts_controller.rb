@@ -4,7 +4,7 @@ module V1
     before_action :authenticate, except: [:index, :show]
 
     def index
-      posts = Post.all
+      posts = Post.order(created_at: :desc).limit(100)
       render json: posts, adapter: :json
     end
 
@@ -37,7 +37,7 @@ module V1
     private
 
     def set_post
-      @post = Post.find_by(params[:id])
+      @post = Post.find_by(id: params[:id])
       authorize @post
     end
     # permition

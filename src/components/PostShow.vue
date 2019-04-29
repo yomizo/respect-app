@@ -7,23 +7,66 @@
       persistent
     >
       <v-card class="tp blue-grey lighten-5">
-        <v-card-title class="title">{{postData.id}}:{{postData.respect}}</v-card-title>
-        <v-card-text class="text-xs-center">
+        <v-card-actions>
+          <v-btn @click="closeDialog" 
+            icon 
+            color="pink accent-2"
+            flat
+            small>
+            <v-icon>arrow_back</v-icon>
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-speed-dial
+            v-model="fab"
+            direction="left"
+          >
+            <template v-slot:activator>
+              <v-btn
+                v-model="fab"
+                color="pink accent-2"
+                flat
+                dark
+                fab
+                small
+              >
+                <v-icon>more_horiz</v-icon>
+                <v-icon>close</v-icon>
+              </v-btn>
+            </template>
+            <v-btn
+              fab
+              dark
+              small
+              outline
+              color="pink accent-2"
+              to="/postedit"
+            >
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <v-btn
+              fab
+              dark
+              small
+              color="pink accent-2"
+              @click="deletePost"
+            >
+              <v-icon>delete</v-icon>
+            </v-btn>
+          </v-speed-dial>
+        </v-card-actions>
+        <v-card-text dark class="text-xs-center">
           <v-avatar size="36">
             <img :src="require('../assets/yomizou_face.png')" alt="avatar">
           </v-avatar>
           {{postData.user.name}}
         </v-card-text>
-        <v-card-text class="text-xs-center">
+        
+        <v-card-title class="title">{{postData.respect}}</v-card-title>
+
+        <v-card-text v-model="postData.commnent" class="text-xs-center">
           {{postData.comment}}
-        </v-card-text>
-        <v-card-text>
-          <v-btn @click="closeDialog" icon 
-            color="pink accent-2"
-            right small>
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-card-text>
+        </v-card-text>        
+        
       </v-card>
     </v-dialog>
   </v-layout>
@@ -33,6 +76,7 @@
   export default {
     data () {
       return {
+        fab: false,
         messages: [
           {
             name: "Fight!",
@@ -73,10 +117,16 @@
           if(this.messages[1].toggle){this.messages[0].toggle = false}
         }
       },
+
       closeDialog() {
         this.$store.dispatch('setDialog')
         this.$router.push('/')
       },
+
+      deletePost() {
+        let url = '/posts/' + this.postData.id
+        this.$store.dispatch('deletePost', url)
+      }
     },
     computed: {
       // defined vuex(store) variable
