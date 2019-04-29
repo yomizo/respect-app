@@ -57,7 +57,7 @@
           <v-avatar size="36">
             <img :src="require('../assets/yomizou_face.png')" alt="avatar">
           </v-avatar>
-          {{postData.user.name}}
+          <!-- {{postData.user.name}} -->
         </v-card-text>
         
         <v-card-title class="title">{{postData.respect}}</v-card-title>
@@ -124,7 +124,6 @@
 
       deletePost() {
         let url = '/posts/' + this.postData.id
-        console.log(url)
         this.$store.dispatch('deletePost', url)
       }
     },
