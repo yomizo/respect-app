@@ -39,6 +39,7 @@
               small
               outline
               color="pink accent-2"
+              to="/postedit"
             >
               <v-icon>edit</v-icon>
             </v-btn>
@@ -53,16 +54,16 @@
             </v-btn>
           </v-speed-dial>
         </v-card-actions>
-        <v-card-text class="text-xs-center">
+        <v-card-text dark class="text-xs-center">
           <v-avatar size="36">
             <img :src="require('../assets/yomizou_face.png')" alt="avatar">
           </v-avatar>
-          <!-- {{postData.user.name}} -->
+          {{postData.user.name}}
         </v-card-text>
         
         <v-card-title class="title">{{postData.respect}}</v-card-title>
 
-        <v-card-text class="text-xs-center">
+        <v-card-text v-model="postData.commnent" class="text-xs-center">
           {{postData.comment}}
         </v-card-text>        
         

@@ -105,7 +105,7 @@
       },
 
       //vuex state.dialog update & add_marker
-      isOk(msg) {
+      isOk() {
         let isDelete = true // just default
         // add_marker and delete tmpMarker
         this.messages.forEach((message, i) => {

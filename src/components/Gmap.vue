@@ -85,7 +85,6 @@ export default {
   watch: {
     // After searchList is fill, allocate initial markers
     searchList: function(newVal, oldVal) {
-      console.log(newVal)
       self = this
       if(newVal){
         newVal.forEach(function(post) {

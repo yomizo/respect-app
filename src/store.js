@@ -134,9 +134,8 @@ const store = new Vuex.Store({
         });
     },
 
-    //
+    // destroy post
     deletePost(state, payload) {
-      console.log(payload.url);
       axios
         .delete(
           URL_BASE + payload.url,
@@ -146,9 +145,26 @@ const store = new Vuex.Store({
           console.log(res.data);
         })
         .catch(error => {
-          console.log(error);
+          console.log(error.data);
         });
     },
+
+    // update post's comment
+    editPost(state, payload) {
+      state.postData.comment = payload.comment
+      axios
+        .patch(URL_BASE + payload.url,
+          { post: state.postData },
+          { headers: { Authorization: `Token ${state.token}`} }
+        )
+        .then(res => {
+        
+        })
+        .catch(error => {
+        
+        })
+
+    }
   },
 
   actions: {
@@ -172,12 +188,14 @@ const store = new Vuex.Store({
       commit("signin", { url, params });
     },
     createPost({ commit }, [url, params]) {
-      commit("createPost", { url, params });
+      commit("createPost", { url, params })
     },
     deletePost({ commit }, url) {
       commit("deletePost", { url })
     },
-    
+    editPost({ commit }, [url, comment]) {
+      commit("editPost", {url, comment})
+    }
   }
 
   // for sessionStorage
