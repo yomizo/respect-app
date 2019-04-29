@@ -6,6 +6,16 @@
       persistent
     >
       <v-card class="opacity grey darken-4 pa-2">
+        <v-card-actions>
+          <v-btn @click="isCancel" 
+            icon 
+            color="pink accent-2"
+            flat
+            small>
+            <v-icon>arrow_back</v-icon>
+          </v-btn>
+          <v-spacer></v-spacer>          
+        </v-card-actions>
         <v-card-text class="title text-xs-center white--text">
           RESPECTしますか？
         </v-card-text>
@@ -37,20 +47,10 @@
             round
             dark
             fab
-            outline
-            color="pink accent-2"
-            @click="isCancel"
-          >
-            <v-icon>arrow_back</v-icon>
-          </v-btn>
-          <v-btn
-            round
-            dark
-            fab
             color="pink accent-2"
             @click="isOk"
           >
-           <v-icon>location_on</v-icon>
+           <v-icon>add_location</v-icon>
           </v-btn>
         </v-card-text>
       </v-card>

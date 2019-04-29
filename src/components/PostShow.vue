@@ -7,23 +7,64 @@
       persistent
     >
       <v-card class="tp blue-grey lighten-5">
-        <v-card-title class="title">{{postData.id}}:{{postData.respect}}</v-card-title>
+        <v-card-actions>
+          <v-btn @click="closeDialog" 
+            icon 
+            color="pink accent-2"
+            flat
+            small>
+            <v-icon>arrow_back</v-icon>
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-speed-dial
+            v-model="fab"
+            direction="left"
+          >
+            <template v-slot:activator>
+              <v-btn
+                v-model="fab"
+                color="pink accent-2"
+                flat
+                dark
+                fab
+                small
+              >
+                <v-icon>more_horiz</v-icon>
+                <v-icon>close</v-icon>
+              </v-btn>
+            </template>
+            <v-btn
+              fab
+              dark
+              small
+              outline
+              color="pink accent-2"
+            >
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <v-btn
+              fab
+              dark
+              small
+              color="pink accent-2"
+            >
+              <v-icon>delete</v-icon>
+            </v-btn>
+          </v-speed-dial>
+        </v-card-actions>
         <v-card-text class="text-xs-center">
           <v-avatar size="36">
             <img :src="require('../assets/yomizou_face.png')" alt="avatar">
           </v-avatar>
           {{postData.user.name}}
         </v-card-text>
+        
+        <v-card-title class="title">{{postData.respect}}</v-card-title>
+
         <v-card-text class="text-xs-center">
           {{postData.comment}}
-        </v-card-text>
-        <v-card-text>
-          <v-btn @click="closeDialog" icon 
-            color="pink accent-2"
-            right small>
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-card-text>
+        </v-card-text>        
+        
       </v-card>
     </v-dialog>
   </v-layout>
@@ -33,6 +74,7 @@
   export default {
     data () {
       return {
+        fab: false,
         messages: [
           {
             name: "Fight!",
