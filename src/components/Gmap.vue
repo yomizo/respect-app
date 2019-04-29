@@ -100,7 +100,8 @@ export default {
 
             // search postData using latlng in searchList
             let postData = newVal.filter(function(item, i){
-              if (item.lat == latLng.lat && item.lng == latLng.lng) return true
+              if (item.lat == latLng.lat && item.lng == latLng.lng)
+              return true
             })
             self.$store.dispatch('setPostData', postData[0])
             self.$store.dispatch('setDialog')

@@ -9,10 +9,10 @@ class PostPolicy < ApplicationPolicy
   end
 
   def update?
-    record.user_id == user_id
+    record.user_id == user.id
   end
 
   def destroy?
-    record.user_id == user_id
+    record.user_id == user.id
   end
 end

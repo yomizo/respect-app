@@ -37,7 +37,7 @@ module V1
     private
 
     def set_post
-      @post = Post.find_by(params[:id])
+      @post = Post.find_by(id: params[:id])
       authorize @post
     end
     # permition

@@ -47,6 +47,7 @@
               dark
               small
               color="pink accent-2"
+              @click="deletePost"
             >
               <v-icon>delete</v-icon>
             </v-btn>
@@ -115,10 +116,17 @@
           if(this.messages[1].toggle){this.messages[0].toggle = false}
         }
       },
+
       closeDialog() {
         this.$store.dispatch('setDialog')
         this.$router.push('/')
       },
+
+      deletePost() {
+        let url = '/posts/' + this.postData.id
+        console.log(url)
+        this.$store.dispatch('deletePost', url)
+      }
     },
     computed: {
       // defined vuex(store) variable

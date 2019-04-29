@@ -98,6 +98,7 @@
 
 
     methods: {
+      //
       closeDialog() {
         this.$store.dispatch('setDialog')
         this.comment = ''
@@ -145,6 +146,8 @@
           }
         })
       },
+
+      //
       createPost(respect) {
         let params = {
           respect: respect,
