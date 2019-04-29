@@ -86,7 +86,7 @@
             alert(this.errors.all())
             return
           }
-          this.postUser()
+          this.registerUser()
         })
       },
       clear () {
@@ -95,13 +95,13 @@
         this.password = ''
         this.$validator.reset()
       },
-      postUser() {
+      registerUser() {
         var params = {
           name: this.name, 
           email: this.email, 
           password: this.password
           }
-        this.$store.dispatch('setUser', ['/users', params])
+        this.$store.dispatch('registerUser', ['/users', params])
       }
     }
   }

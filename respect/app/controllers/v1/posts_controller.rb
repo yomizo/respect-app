@@ -13,7 +13,7 @@ module V1
     end
 
     def create
-      post = Post.new(post_params)
+      post = Post.new(post_params.merge(user_id: current_user.id))
       if post.save
         render json: post, adapter: :json, status: 201
       else
@@ -37,12 +37,12 @@ module V1
     private
 
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.find_by(params[:id])
       authorize @post
     end
     # permition
     def post_params
-      params.require(:post).permit(:user_id, :respect, :lat, :lng, :comment)
+      params.require(:post).permit(:respect, :lat, :lng, :comment)
     end
   end
 end

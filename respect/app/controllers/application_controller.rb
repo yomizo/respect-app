@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
 
 
   # correct token? or have token?
-  def authenticate
+  def authenticate # ninsho
     if request.headers[:HTTP_AUTHORIZATION] != nil
       current_user || no_authentication
     else
@@ -15,8 +15,9 @@ class ApplicationController < ActionController::API
     end
   end
 
+  private
   # Searching which does user have token?
-  def current_user
+  def current_user 
     authenticate_with_http_token do |token, options|
       @current_user = User.find_by(token: token) 
     end
@@ -26,11 +27,11 @@ class ApplicationController < ActionController::API
     render json: { error: 'No Header' }, status: 400
   end
 
-  def no_authentication
+  def no_authentication # no_ninsho
     render json: { error: 'No Authentication' }, status: 401
   end
 
-  def no_authorization
+  def no_authorization # no_ninka
     render json: { error: 'No Authorization' }, status: 403
   end
 

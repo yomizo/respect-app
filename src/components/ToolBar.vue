@@ -2,7 +2,7 @@
   <v-toolbar app fixed dense clipped-left class="pink lighten-5">
     <v-toolbar-items class="text-uppercase">
       <v-btn flat class="headline grey--text--darken-3 font-weight-bold" href="/">
-        {{title}}
+        {{token}}
       </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
@@ -30,11 +30,15 @@
         { title: 'Map', icon: 'question_answer', href:'/' },
         { title: 'SignUp', icon: 'dashboard', href:'/signup' },
         { title: 'SignIn', icon: 'question_answer', href:'/signin' },
-        { title: 'Mypage', icon: 'question_answer', href:'/mypage' },        
+        { title: 'Mypage', icon: 'question_answer', href:'/post-tmp' },        
       ],
       mini: false,
       right: null
     }),
+
+    computed: {
+     token: { get() {return this.$store.getters.token} } 
+    }
   }
 </script>
 

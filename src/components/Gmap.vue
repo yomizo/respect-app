@@ -20,8 +20,9 @@ export default {
   },
   methods:{
     //vuex state.dialog update
-    raiseDialog(tempMarker) {
-      this.$store.dispatch('setDialog', [tempMarker, map])
+    raiseDialog(tempMarker, map) {
+      this.$store.dispatch('setDialog')
+      this.$store.dispatch('setMarker', [tempMarker, map])
     },
 
     culPosition: function(lat, lng) {
@@ -36,7 +37,7 @@ export default {
       })
 
       map.panTo(latLng) // move center to clicked place
-      map.panBy(0, 150) // offset below
+      map.panBy(0, 170) // offset below
       
       this.raiseDialog(tempMarker, map) // raise modal
       
@@ -82,7 +83,7 @@ export default {
 
 
   watch: {
-    // After searchList is fill, allocate marker
+    // After searchList is fill, allocate initial markers
     searchList: function(newVal, oldVal) {
       self = this
       if(newVal){
@@ -92,9 +93,18 @@ export default {
             icon: self.icons[post.respect],
             map: self.map
           })
-          // Set marker click event listener
+          // show postData when marker clicked
           marker.addListener('click', function(e){
-            console.log("marker clicked")
+            // get latlng data
+            let latLng = e.latLng.toJSON()
+
+            // search postData using latlng in searchList
+            let postData = newVal.filter(function(item, i){
+              if (item.lat == latLng.lat && item.lng == latLng.lng) return true
+            })
+            self.$store.dispatch('setPostData', postData[0])
+            self.$store.dispatch('setDialog')
+            self.$router.push('/postshow') //redirect
           })          
         })
       }
