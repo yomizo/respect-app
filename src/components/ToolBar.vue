@@ -1,20 +1,49 @@
 <template>
-  <v-toolbar app fixed dense clipped-left class="pink lighten-5">
-    <v-toolbar-items class="text-uppercase">
-      <v-btn flat class="headline grey--text--darken-3 font-weight-bold" href="/">
+  <v-toolbar app fixed flat color="transparent">
+    <v-toolbar-items>
+      <v-btn flat class="headline pink--text--accent-2 font-weight-bold" href="/">
         {{token}}
       </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
+<!-- all user btns       -->
       <v-btn
-        class="grey--text--darken-3" 
-        v-for="(btn, i) in btns" 
+        class="pink accent-2 white--text"
+        v-for="(btn, i) in btns"
+        fab
+        ma-1
         :key="i"  
         :to="btn.href"
-        flat>
+        >
         {{btn.title}}
       </v-btn>
+<!-- user btns -->
+      <div v-if="token">
+        <v-btn
+          class="pink accent-2 white--text"
+          v-for="(btn, i) in guesstBtns"
+          fab
+          ma-1
+          :key="i"  
+          :to="btn.href"
+          >
+          {{btn.title}}
+        </v-btn>
+      </div>
+<!-- guesst btns       -->
+      <div v-else>
+        <v-btn
+          class="pink accent-2 white--text"
+          v-for="(btn, i) in userBtns"
+          fab
+          ma-1
+          :key="i"  
+          :to="btn.href"
+          >
+          {{btn.title}}
+        </v-btn>
+      </div>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -24,16 +53,19 @@
   export default {
     data: () => ({
       title: "Respect!",
-      subtitle:"",
       drawer: false,
       btns: [
-        { title: 'Map', icon: 'question_answer', href:'/' },
+        { title: 'Map', icon: 'add_location', href:'/'},
+        { title: 'Search', icon: 'search' },
+      ],
+      userBtns:[
         { title: 'SignUp', icon: 'dashboard', href:'/signup' },
         { title: 'SignIn', icon: 'question_answer', href:'/signin' },
-        { title: 'Mypage', icon: 'question_answer', href:'/post-tmp' },        
       ],
-      mini: false,
-      right: null
+      guesstBtns:[
+        { title: 'Mypage', icon: 'question_answer', href:'/post-tmp' },
+        { title: 'Logout', icon: 'question_answer', href:'/post-tmp' },        
+      ],
     }),
 
     computed: {

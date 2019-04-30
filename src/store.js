@@ -18,7 +18,7 @@ const store = new Vuex.Store({
     marker: null,
     markerList: null,
     flash: null,
-    token: "",
+    token: null,
     postData: null
   },
 

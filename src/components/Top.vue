@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid px-0 py-2>
+  <v-container fluid pa-0>
     <v-layout row>
-      <v-flex class="hidden-md-and-down" lg3 py-5>
+      <v-flex class="hidden-md-and-down" lg3>
         <PostsIndex/>
       </v-flex>
       <v-flex>

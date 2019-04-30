@@ -116,9 +116,8 @@ export default {
 
 <style>
 #map {
-  margin-top: 40px;
   height: auto;
-  min-height: 95vh;
+  min-height: 100vh;
 }
 </style>
 
