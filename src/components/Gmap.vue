@@ -18,6 +18,18 @@ export default {
       },
     }
   },
+
+
+  computed: {
+    marker: {
+      get() { return this.$store.getters.marker },
+    },
+    markerList: {
+      get() { return this.$store.getters.markerList },
+    },    
+  },
+  
+  
   methods:{
     //vuex state.dialog update
     raiseDialog(tempMarker, map) {
@@ -40,25 +52,9 @@ export default {
       map.panBy(0, 170) // offset below
       
       this.raiseDialog(tempMarker, map) // raise modal
-      
-      // marker.addListener('click', function(e){
-      //   console.log("addmarker clicked")
-      // })
     },
 
     
-  },
-  computed: {
-    dialog: {
-      get() { return this.$store.getters.dialog },
-      // set() { this.$store.dispatch('doUpdate') }
-    },
-    marker: {
-      get() { return this.$store.getters.marker },
-    },
-    markerList: {
-      get() { return this.$store.getters.markerList },
-    },    
   },
   
   //Life cycle

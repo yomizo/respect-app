@@ -22,7 +22,7 @@
       <div v-if="token">
         <v-btn
           class="pink accent-2 white--text"
-          v-for="(btn, i) in guesstBtns"
+          v-for="(btn, i) in userBtns"
           fab
           ma-1
           :key="i"  
@@ -35,7 +35,7 @@
       <div v-else>
         <v-btn
           class="pink accent-2 white--text"
-          v-for="(btn, i) in userBtns"
+          v-for="(btn, i) in guesstBtns"
           fab
           ma-1
           :key="i"  
@@ -58,11 +58,12 @@
         { title: 'Map', icon: 'add_location', href:'/'},
         { title: 'Search', icon: 'search' },
       ],
-      userBtns:[
-        { title: 'SignUp', icon: 'dashboard', href:'/signup' },
-        { title: 'SignIn', icon: 'question_answer', href:'/signin' },
-      ],
       guesstBtns:[
+        { title: 'SignUp', icon: 'mdi-user-add', href:'/signup' },
+        { title: 'SignIn', icon: '', href:'/signin' },
+         { title: 'About', icon: '', href:'' },
+      ],
+      userBtns:[
         { title: 'Mypage', icon: 'question_answer', href:'/post-tmp' },
         { title: 'Logout', icon: 'question_answer', href:'/post-tmp' },        
       ],
