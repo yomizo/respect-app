@@ -31,7 +31,7 @@ export default {
 
     makeMarker: function(latLng, map) {
       // make TEMP marker
-      var tempMarker = new google.maps.Marker({
+      let tempMarker = new google.maps.Marker({
         position: latLng,
         map: map,
       })
@@ -56,15 +56,15 @@ export default {
     marker: {
       get() { return this.$store.getters.marker },
     },
-    searchList: {
-      get() { return this.$store.getters.searchList },
+    markerList: {
+      get() { return this.$store.getters.markerList },
     },    
   },
   
   //Life cycle
   beforeCreate(){
     // set posts_json
-    this.$store.dispatch('setPosts', ['/posts'])
+    this.$store.dispatch('markerList', ['/posts'])
   },  
 
   mounted(){
@@ -83,8 +83,8 @@ export default {
 
 
   watch: {
-    // After searchList is fill, allocate initial markers
-    searchList: function(newVal, oldVal) {
+    // After markerList is fill, allocate initial markers
+    markerList: function(newVal, oldVal) {
       self = this
       if(newVal){
         newVal.forEach(function(post) {
@@ -97,7 +97,7 @@ export default {
           marker.addListener('click', function(e){
             // get latlng data
             let latLng = e.latLng
-            // search postData using latlng in searchList
+            // marker postData using latlng in markerList
             let postData = newVal.filter(function(item, i){
               let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
               if (storedLatLng.equals(latLng)) return true

@@ -101,7 +101,7 @@
           email: this.email, 
           password: this.password
           }
-        this.$store.dispatch('registerUser', ['/users', params])
+        this.$store.dispatch('signup', ['/users', params])
       }
     }
   }

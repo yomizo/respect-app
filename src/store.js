@@ -16,9 +16,8 @@ const store = new Vuex.Store({
     dialog: false,
     map: null,
     marker: null,
-    searchList: null,
+    markerList: null,
     flash: null,
-    isPrivate: false,
     token: "",
     postData: null
   },
@@ -33,8 +32,8 @@ const store = new Vuex.Store({
     map(state) {
       return state.map;
     },
-    searchList(state) {
-      return state.searchList;
+    markerList(state) {
+      return state.markerList;
     },
     flash(state) {
       return state.flash;
@@ -63,107 +62,19 @@ const store = new Vuex.Store({
     updatePostData(state, payload) {
       state.postData = payload.postData;
     },
-
-    //set search_list
-    updateSearchList(state, payload) {
-      axios
-        .get(URL_BASE + payload.url)
-        .then(res => {
-          state.searchList = res.data.posts;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    updateComment(state, payload) {
+      state.postData.comment = payload.comment;
+    },
+    updateToken(state, payload) {
+      state.token = payload.token;
+    },
+    updateMarkers(state, payload) {
+      state.markerList = payload.posts
     },
 
-    // signup
-    signup(state, payload) {
-      axios
-        .post(URL_BASE + payload.url, {
-          user: payload.params
-        })
-        .then(res => {
-          console.log(res.data);
-          state.flash = "Registration is done"; //update flash message
-          router.push("/"); //redirect
-          state.isPrivate = true; //change private
-          state.token = res.data;
-        })
-        .catch(error => {
-          console.log(error);
-          state.flash = "Registration is false"; //update flash message
-        });
-    },
-
-    // signin
-    signin(state, payload) {
-      axios
-        .post(URL_BASE + payload.url, {
-          user: payload.params
-        })
-        .then(res => {
-          // console.log(res.data);
-          state.flash = "Success Signin";
-          router.push("/");
-          state.isPrivate = true;
-          state.token = res.data;
-        })
-        .catch(error => {
-          // console.log(error);
-          state.flash = "Sorry failed";
-        });
-    },
-
-    // create post
-    createPost(state, payload) {
-      // axios.defaults.headers.common['Authorization'] = state.token
-      axios
-        .post(
-          URL_BASE + payload.url,
-          { post: payload.params },
-          { headers: { Authorization: `Token ${state.token}` } }
-        )
-        .then(res => {
-          // console.log(res.data);
-          state.flash = "Posted!";
-          router.push("/");
-        })
-        .catch(error => {
-          console.log(error);
-          state.flash = "Post is failed";
-        });
-    },
-
-    // destroy post
-    deletePost(state, payload) {
-      axios
-        .delete(
-          URL_BASE + payload.url,
-          { headers: { Authorization: `Token ${state.token}` } }
-        )
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(error => {
-          console.log(error.data);
-        });
-    },
-
-    // update post's comment
-    editPost(state, payload) {
-      state.postData.comment = payload.comment
-      axios
-        .patch(URL_BASE + payload.url,
-          { post: state.postData },
-          { headers: { Authorization: `Token ${state.token}`} }
-        )
-        .then(res => {
-        
-        })
-        .catch(error => {
-        
-        })
-
+    // update flash
+    updateFlash(state, payload) {
+      state.flash = payload;
     }
   },
 
@@ -172,29 +83,99 @@ const store = new Vuex.Store({
       commit("updateDialog");
     },
     setMarker({ commit }, [tempMarker, map]) {
-      // console.log("get");
       commit("updateMarker", { tempMarker, map });
-    },
-    setPosts({ commit }, url) {
-      commit("updateSearchList", { url });
     },
     setPostData({ commit }, postData) {
       commit("updatePostData", { postData });
     },
-    registerUser({ commit }, [url, params]) {
-      commit("signup", { url, params });
+
+    // Read initial markerList in DB
+    markerList(context, url) {
+      axios.get(URL_BASE + url)
+        .then(res => {
+          context.commit('updateMarkers', { posts: res.data.posts })
+        }).catch(error => {
+          context.commit('updateFlash', "Refresh Browser")
+      })
     },
-    signinUser({ commit }, [url, params]) {
-      commit("signin", { url, params });
+
+    //
+    signup(context, [url, params]) {
+      axios
+        .post(URL_BASE + url, { user: params })
+        .then(res => {
+          context.commit("updateFlash", "Welcome Respectful world!");
+          context.commit("updateToken", { token: res.data });
+          router.push("/");
+        })
+        .catch(error => {
+          context.commit("updateFlash", "Sorry failed");
+        });
     },
-    createPost({ commit }, [url, params]) {
-      commit("createPost", { url, params })
+
+    //
+    signin(context, [url, params]) {
+      axios
+        .post(URL_BASE + url, { user: params })
+        .then(res => {
+          context.commit("updateFlash", "Signin Success!");
+          context.commit("updateToken", { token: res.data });
+          router.push("/");
+        })
+        .catch(error => {
+          context.commit("updateFlash", "Sorry failed");
+        });
     },
-    deletePost({ commit }, url) {
-      commit("deletePost", { url })
+
+    //
+    createPost(context, [url, params]) {
+      axios
+        .post(
+          URL_BASE + url,
+          { post: params },
+          { headers: { Authorization: `Token ${context.state.token}` } }
+        )
+        .then(res => {
+          context.commit('updateFlash', "Post is created!");
+          context.dispatch('markerList', url)
+          router.push("/");
+        })
+        .catch(error => {
+          context.commit('updateFlash', "Post failed!");
+        });
     },
-    editPost({ commit }, [url, comment]) {
-      commit("editPost", {url, comment})
+
+    //
+    deletePost(context, url) {
+      axios
+        .delete(URL_BASE + url, {
+          headers: { Authorization: `Token ${context.state.token}` }
+        })
+        .then(res => {
+          context.commit("updateFlash", "Post is deleted!");
+        })
+        .catch(error => {
+          context.commit("updateFlash", "Delete failed!");
+        });
+    },
+
+    //
+    editPost(context, [url, comment]) {
+      context.commit("updateComment", { comment });
+
+      axios
+        .patch(
+          URL_BASE + url,
+          { post: context.state.postData },
+          { headers: { Authorization: `Token ${context.state.token}` } }
+        )
+        .then(res => {
+          context.commit('updateFlash', "Edit Complete!");
+          router.push("/postshow");
+        })
+        .catch(error => {
+          context.commit("updateFlash", "Edit failed!");
+        });
     }
   }
 

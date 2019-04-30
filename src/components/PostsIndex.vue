@@ -1,6 +1,6 @@
 <template>
   <v-list two-line>
-    <template v-for="(post, index) in searchList">
+    <template v-for="(post, index) in markerList">
       <v-list-tile
         :key="index"
         avatar
@@ -31,8 +31,8 @@
 
     //
     computed: {
-      searchList: {
-        get() { return this.$store.getters.searchList}
+      markerList: {
+        get() { return this.$store.getters.markerList}
       }
     },
   }

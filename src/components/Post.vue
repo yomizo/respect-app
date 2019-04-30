@@ -93,7 +93,10 @@
       },
       token: {
         get() { return this.$store.getters.token }
-      }
+      },
+      searchList: {
+        get() { return this.$store.getters.searchList }
+      },      
     },
 
 
@@ -106,6 +109,7 @@
 
       //vuex state.dialog update & add_marker
       isOk() {
+        self = this
         let isDelete = true // just default
         // add_marker and delete tmpMarker
         this.messages.forEach((message, i) => {
@@ -113,8 +117,19 @@
             let respect = i
             this.marker.setIcon(this.messages[i].src)
             this.marker.addListener('click', function(e){
-              console.log("addmarker clicked")
+              // get latlng data
+              let latLng = e.latLng
+              // search postData using latlng in searchList
+              let postData = self.searchList.filter(function(item, i){
+                let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
+                if (storedLatLng.equals(latLng)) return true
+              })
+              self.$store.dispatch('setPostData', postData[0])
+              self.$store.dispatch('setDialog')
+              self.$router.push('/postshow') //redirect              
             })
+
+            // create record in DB
             this.createPost(respect)
             isDelete = false // marker isn't deleted
           }
