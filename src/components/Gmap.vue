@@ -22,11 +22,14 @@ export default {
 
   computed: {
     marker: {
-      get() { return this.$store.getters.marker },
+      get() { return this.$store.getters.marker }
     },
     markerList: {
-      get() { return this.$store.getters.markerList },
-    },    
+      get() { return this.$store.getters.markerList }
+    },
+    token: {
+      get() { return this.$store.getters.token }
+    }
   },
   
   
@@ -36,12 +39,22 @@ export default {
       this.$store.dispatch('setDialog')
       this.$store.dispatch('setMarker', [tempMarker, map])
     },
+    isToken() {
+      if(!this.token) {
+        this.$store.commit('updateFlash', "Please Signin")
+        return true
+      }
+    },
 
     culPosition: function(lat, lng) {
       return new google.maps.LatLng(lat, lng)
     },
 
     makeMarker: function(latLng, map) {
+      // signin?
+      if (this.isToken()) {
+        return
+      }
       // make TEMP marker
       let tempMarker = new google.maps.Marker({
         position: latLng,
@@ -103,6 +116,13 @@ export default {
             vm.$router.push('/postshow') //redirect
           })          
         })
+      }
+    },
+
+    // authentication
+    token: function(newToken) {
+      if(!newToken) {
+        this.$router.push('/')
       }
     }
   }

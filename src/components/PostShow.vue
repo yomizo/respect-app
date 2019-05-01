@@ -17,6 +17,7 @@
           </v-btn>
           <v-spacer></v-spacer>
           <v-speed-dial
+            v-if="isId"
             v-model="fab"
             direction="left"
           >
@@ -77,6 +78,7 @@
     data () {
       return {
         fab: false,
+        isId: false,
         messages: [
           {
             name: "Fight!",
@@ -91,6 +93,32 @@
         ]
       }
     },
+
+    //
+    computed: {
+      // defined vuex(store) variable
+      dialog: {
+        get() { return this.$store.getters.dialog },
+        set() { this.$store.dispatch('setDialog', null) }
+      },
+      marker: {
+        get() { return this.$store.getters.marker },
+      },
+      map: {
+        get() { return this.$store.getters.map }
+      },
+      postData: {
+        get() { return this.$store.getters.postData }
+      },
+      token: {
+        get() { return this.$store.getters.token }
+      },
+      userId: {
+        get() { return this.$store.getters.userId }
+      },      
+    },    
+
+    //
     methods: {
       //vuex state.dialog update & add_marker
       isOk(message) {
@@ -126,25 +154,15 @@
       deletePost() {
         let url = '/posts/' + this.postData.id
         this.$store.dispatch('deletePost', url)
-      }
+      },
     },
-    computed: {
-      // defined vuex(store) variable
-      dialog: {
-        get() { return this.$store.getters.dialog },
-        set() { this.$store.dispatch('setDialog', null) }
-      },
-      marker: {
-        get() { return this.$store.getters.marker },
-      },
-      map: {
-        get() { return this.$store.getters.map }
-      },
-      postData: {
-        get() { return this.$store.getters.postData }
+
+    //
+    created() {
+      if(this.postData.user.id == this.userId) {
+        this.isId = true
       }
     }
-  
   }
 </script>
 

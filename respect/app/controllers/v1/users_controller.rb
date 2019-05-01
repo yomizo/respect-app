@@ -16,7 +16,7 @@ module V1
     def create
       user = User.new(user_params)
       if user.save
-        render json: user.token, adapter: :json, status: 201
+        render json: {id: user.id, token: user.token}, adapter: :json, status: 201
       else
         render json: { error: user.errors}, status: 422
       end

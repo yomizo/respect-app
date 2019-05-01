@@ -21,6 +21,7 @@ const store = new Vuex.Store({
     flash: null,
     token: null,
     postData: null,
+    userId: null,
   },
 
   getters: {
@@ -45,11 +46,12 @@ const store = new Vuex.Store({
     postData(state) {
       return state.postData;
     },
-    //#######develop only###########
     token(state) {
       return state.token;
+    },
+    userId(state) {
+      return state.userId
     }
-    //#######develop only###########
   },
 
   mutations: {
@@ -69,6 +71,9 @@ const store = new Vuex.Store({
     updateToken(state, payload) {
       state.token = payload.token;
     },
+    updateUserId(state, payload) {
+      state.userId = payload.userId
+    },
     updateMarkers(state, payload) {
       state.markerList = payload.posts
     },
@@ -80,6 +85,8 @@ const store = new Vuex.Store({
   },
 
   actions: {
+
+    // setOnly
     setDialog({ commit }) {
       commit("updateDialog");
     },
@@ -100,27 +107,29 @@ const store = new Vuex.Store({
       })
     },
 
-    //
+    // user create
     signup(context, [url, params]) {
       axios
         .post(URL_BASE + url, { user: params })
         .then(res => {
-          context.commit("updateFlash", "Welcome Respectful world!");
-          context.commit("updateToken", { token: res.data });
+          context.commit("updateFlash", "Welcome Respectful world!")
+          context.commit("updateToken", { token: res.data.token })
+          context.commit('updateUserId', {userId: res.data.id})
           router.push("/");
         })
         .catch(error => {
-          context.commit("updateFlash", "Sorry failed");
+          context.commit("updateFlash", "Sorry failed")
         });
     },
 
-    //
+    // user authentication
     signin(context, [url, params]) {
       axios
         .post(URL_BASE + url, { user: params })
         .then(res => {
           context.commit("updateFlash", "Signin Success!");
-          context.commit("updateToken", { token: res.data });
+          context.commit("updateToken", { token: res.data.token });
+          context.commit("updateUserId", { userId: res.data.id })
           router.push("/");
         })
         .catch(error => {
@@ -128,7 +137,7 @@ const store = new Vuex.Store({
         });
     },
 
-    //
+    // post create
     createPost(context, [url, params]) {
       axios
         .post(
@@ -146,7 +155,7 @@ const store = new Vuex.Store({
         });
     },
 
-    //
+    // post delete
     deletePost(context, url) {
       axios
         .delete(URL_BASE + url, {
@@ -160,7 +169,7 @@ const store = new Vuex.Store({
         });
     },
 
-    //
+    // post edit
     editPost(context, [url, comment]) {
       context.commit("updateComment", { comment });
 

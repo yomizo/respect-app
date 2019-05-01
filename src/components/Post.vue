@@ -171,10 +171,8 @@
           comment: this.comment,
         }
         this.$store.dispatch('createPost', ['/posts', params])
-      }
+      },
     },
-
-  
   }
 </script>
 

@@ -4,7 +4,7 @@ module V1
     def signin
       signin_user = User.find_by(email: signin_params[:email])
       if signin_user&.authenticate(signin_params[:password])
-        render json: signin_user.token, adapter: :json
+        render json: {id: signin_user.id, token: signin_user.token}, adapter: :json
       else
         render json: {error: 'unauthorization'}, status: 422
       end

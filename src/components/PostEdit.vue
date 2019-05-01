@@ -70,6 +70,7 @@
         get() { return this.$store.getters.dialog },
         set() { this.$store.dispatch('setDialog') }
       },
+      
     },
 
 
