@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import VueAxios from 'vue-axios' // Vue.prototype.$axios
 import router from './router.js'
 // import createPersistedState from "vuex-persistedstate";
 
 const URL_BASE = 'http://localhost:3000'
 //registor as plugin
 Vue.use(Vuex)
-Vue.use(axios)
+Vue.use(VueAxios, axios)
 Vue.use(router)
 
 //make the store
