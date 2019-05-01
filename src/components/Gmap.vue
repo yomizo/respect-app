@@ -71,9 +71,9 @@ export default {
     })  
 
     //map click event listen
-    var self = this
+    let vm = this
     this.map.addListener('click', function(e){
-      self.makeMarker(e.latLng, self.map) //will change that popup modal
+      vm.makeMarker(e.latLng, vm.map) //will change that popup modal
     })
   },
 
@@ -81,13 +81,13 @@ export default {
   watch: {
     // After markerList is fill, allocate initial markers
     markerList: function(newVal, oldVal) {
-      self = this
+      let vm = this
       if(newVal){
         newVal.forEach(function(post) {
           var marker = new google.maps.Marker({
             position: {lat: post.lat, lng: post.lng},
-            icon: self.icons[post.respect],
-            map: self.map
+            icon: vm.icons[post.respect],
+            map: vm.map
           })
           // show postData when marker clicked
           marker.addListener('click', function(e){
@@ -98,9 +98,9 @@ export default {
               let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
               if (storedLatLng.equals(latLng)) return true
             })
-            self.$store.dispatch('setPostData', postData[0])
-            self.$store.dispatch('setDialog')
-            self.$router.push('/postshow') //redirect
+            vm.$store.dispatch('setPostData', postData[0])
+            vm.$store.dispatch('setDialog')
+            vm.$router.push('/postshow') //redirect
           })          
         })
       }

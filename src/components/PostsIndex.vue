@@ -1,5 +1,5 @@
 <template>
-  <v-list two-line>
+  <v-list class="sidebar" two-line>
     <template v-for="(post, index) in markerList">
       <v-list-tile
         :key="index"
@@ -37,3 +37,11 @@
     },
   }
 </script>
+
+<style>
+.sidebar {
+  height: 100vh;
+  overflow-y: scroll;
+}
+</style>
+
