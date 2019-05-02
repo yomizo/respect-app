@@ -115,8 +115,13 @@ const store = new Vuex.Store({
           router.push("/");
         })
         .catch(error => {
-          console.log(error.response.data.error.email[0])
-          context.commit("updateFlash", "Sorry failed")
+          let flash = ""
+          if (error.response.data.error.email) {
+            flash = error.response.data.error.email[0]
+          } else {
+            flash = "Sorry failed"
+          }
+          context.commit("updateFlash", flash)
         });
     },
 
