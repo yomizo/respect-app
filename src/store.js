@@ -115,13 +115,7 @@ const store = new Vuex.Store({
           router.push("/");
         })
         .catch(error => {
-          let flash = ""
-          if (error.response.data.error.email) {
-            flash = error.response.data.error.email[0]
-          } else {
-            flash = "Sorry failed"
-          }
-          context.commit("updateFlash", flash)
+          context.dispatch('chooseError', error.response.data.error)
         });
     },
 
@@ -136,13 +130,7 @@ const store = new Vuex.Store({
           router.push("/");
         })
         .catch(error => {
-          let flash = ""
-          if (error.response.status == 422) {
-            flash = "Authentication failed"
-          } else {
-            flash = "Server doesn't respond. Sorry m(__)m"
-          }
-          context.commit("updateFlash", flash);
+          context.dispatch('chooseError', error.response.data.error)
         });
     },
 
@@ -160,7 +148,7 @@ const store = new Vuex.Store({
           router.push("/");
         })
         .catch(error => {
-          context.commit('updateFlash', "Post failed!");
+          context.dispatch("chooseError", error.response.data.error);
         });
     },
 
@@ -171,16 +159,16 @@ const store = new Vuex.Store({
           headers: { Authorization: `Token ${context.state.token}` }
         })
         .then(res => {
-          context.commit("updateFlash", "Post is deleted!");
+          context.commit("updateFlash", "Post is deleted!")
         })
         .catch(error => {
-          context.commit("updateFlash", "Delete failed!");
+          context.dispatch("chooseError", error.response.data.error);
         });
     },
 
     // post edit
     editPost(context, [url, comment]) {
-      context.commit("updateComment", { comment });
+      context.commit("updateComment", { comment })
 
       axios
         .patch(
@@ -189,12 +177,27 @@ const store = new Vuex.Store({
           { headers: { Authorization: `Token ${context.state.token}` } }
         )
         .then(res => {
-          context.commit('updateFlash', "Edit Complete!");
-          router.push("/postshow");
+          context.commit('updateFlash', "Edit Complete!")
+          router.push("/postshow")
         })
         .catch(error => {
-          context.commit("updateFlash", "Edit failed!");
+          context.dispatch("chooseError", error.response.data.error);
         });
+    },
+
+    // Error Common process
+    chooseError(context, error) {
+      let flash = ""
+      if (typeof error == "object") {
+        Object.keys(error).forEach(function (key) {
+          flash += key + ": " + error[key] + '\n' 
+        })
+      } else if(typeof error == "string") {
+        flash = error
+      } else {
+        flash = "Server doesn't respond. Sorry m(__)m"
+      }
+      context.commit("updateFlash", flash)   
     }
   }
 
