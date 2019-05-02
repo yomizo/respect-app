@@ -40,9 +40,6 @@ const store = new Vuex.Store({
     flash(state) {
       return state.flash;
     },
-    isPrivate(state) {
-      return state.isPrivate;
-    },
     postData(state) {
       return state.postData;
     },
@@ -133,7 +130,7 @@ const store = new Vuex.Store({
           router.push("/");
         })
         .catch(error => {
-          context.commit("updateFlash", "Sorry failed");
+          context.commit("updateFlash", error.response.data.error);
         });
     },
 
