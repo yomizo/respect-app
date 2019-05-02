@@ -5,7 +5,11 @@ import VueAxios from 'vue-axios' // Vue.prototype.$axios
 import router from './router.js'
 // import createPersistedState from "vuex-persistedstate";
 
+// config
 const URL_BASE = 'http://localhost:3000'
+const SUCCESS = "#009688"
+const DANGER = "#FF1744"
+
 //registor as plugin
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -19,9 +23,11 @@ const store = new Vuex.Store({
     marker: null,
     markerList: null,
     flash: null,
+    isSnackBar: false,
+    snackBarColor: null,
     token: null,
     postData: null,
-    userId: null,
+    userId: null
   },
 
   getters: {
@@ -47,7 +53,13 @@ const store = new Vuex.Store({
       return state.token;
     },
     userId(state) {
-      return state.userId
+      return state.userId;
+    },
+    isSnackBar(state) {
+      return state.isSnackBar;
+    },
+    snackBarColor(state) {
+      return state.snackBarColor;
     }
   },
 
@@ -69,20 +81,23 @@ const store = new Vuex.Store({
       state.token = payload.token;
     },
     updateUserId(state, payload) {
-      state.userId = payload.userId
+      state.userId = payload.userId;
     },
     updateMarkers(state, payload) {
-      state.markerList = payload.posts
+      state.markerList = payload.posts;
     },
-
-    // update flash
+    updateIsSnackBar(state) {
+      state.isSnackBar = !state.isSnackBar;
+    },
+    updateSnackBarColor(state, payload) {
+      state.snackBarColor = payload.color;
+    },
     updateFlash(state, payload) {
       state.flash = payload;
     }
   },
 
   actions: {
-
     // setOnly
     setDialog({ commit }) {
       commit("updateDialog");
@@ -96,12 +111,14 @@ const store = new Vuex.Store({
 
     // Read initial markerList in DB
     markerList(context, url) {
-      axios.get(URL_BASE + url)
+      axios
+        .get(URL_BASE + url)
         .then(res => {
-          context.commit('updateMarkers', { posts: res.data.posts })
-        }).catch(error => {
-          context.commit('updateFlash', "Refresh Browser")
-      })
+          context.commit("updateMarkers", { posts: res.data.posts });
+        })
+        .catch(error => {
+          context.commit("updateFlash", "Refresh Browser");
+        });
     },
 
     // user create
@@ -109,13 +126,19 @@ const store = new Vuex.Store({
       axios
         .post(URL_BASE + url, { user: params })
         .then(res => {
-          context.commit("updateFlash", "Welcome Respectful world!")
-          context.commit("updateToken", { token: res.data.token })
-          context.commit('updateUserId', {userId: res.data.id})
+          // flash message
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: SUCCESS});
+          context.commit("updateFlash", "Welcome Respectful world!");
+          // authentication
+          context.commit("updateToken", { token: res.data.token });
+          context.commit("updateUserId", { userId: res.data.id });
           router.push("/");
         })
         .catch(error => {
-          context.dispatch('chooseError', error.response.data.error)
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: DANGER});          
+          context.dispatch("chooseError", error.response.data.error);
         });
     },
 
@@ -124,13 +147,19 @@ const store = new Vuex.Store({
       axios
         .post(URL_BASE + url, { user: params })
         .then(res => {
-          context.commit("updateFlash", "Signin Success!")
-          context.commit("updateToken", { token: res.data.token })
-          context.commit("updateUserId", { userId: res.data.id })
+          // flash message
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: SUCCESS});          
+          context.commit("updateFlash", "Signin Success!");
+          // authentication
+          context.commit("updateToken", { token: res.data.token });
+          context.commit("updateUserId", { userId: res.data.id });
           router.push("/");
         })
         .catch(error => {
-          context.dispatch('chooseError', error.response.data.error)
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: DANGER});          
+          context.dispatch("chooseError", error.response.data.error);
         });
     },
 
@@ -143,11 +172,18 @@ const store = new Vuex.Store({
           { headers: { Authorization: `Token ${context.state.token}` } }
         )
         .then(res => {
-          context.commit('updateFlash', "Post is created!");
-          context.dispatch('markerList', url)
+          // flash message
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: SUCCESS});          
+          context.commit("updateFlash", "Post is created!");
+          // update markerlist
+          context.dispatch("markerList", url);
+          // redirect
           router.push("/");
         })
         .catch(error => {
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: DANGER});          
           context.dispatch("chooseError", error.response.data.error);
         });
     },
@@ -159,16 +195,23 @@ const store = new Vuex.Store({
           headers: { Authorization: `Token ${context.state.token}` }
         })
         .then(res => {
-          context.commit("updateFlash", "Post is deleted!")
+          // flash message
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: SUCCESS});          
+          context.commit("updateFlash", "Post is deleted!");
+          // redirect
+          router.push('/')
         })
         .catch(error => {
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: DANGER});          
           context.dispatch("chooseError", error.response.data.error);
         });
     },
 
     // post edit
     editPost(context, [url, comment]) {
-      context.commit("updateComment", { comment })
+      context.commit("updateComment", { comment });
 
       axios
         .patch(
@@ -177,27 +220,33 @@ const store = new Vuex.Store({
           { headers: { Authorization: `Token ${context.state.token}` } }
         )
         .then(res => {
-          context.commit('updateFlash', "Edit Complete!")
-          router.push("/postshow")
+          // flash message
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: SUCCESS});          
+          context.commit("updateFlash", "Edit Complete!");
+          // redirect
+          router.push("/postshow");
         })
         .catch(error => {
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: DANGER});          
           context.dispatch("chooseError", error.response.data.error);
         });
     },
 
     // Error Common process
     chooseError(context, error) {
-      let flash = ""
+      let flash = "";
       if (typeof error == "object") {
-        Object.keys(error).forEach(function (key) {
-          flash += key + ": " + error[key] + '\n' 
-        })
-      } else if(typeof error == "string") {
-        flash = error
+        Object.keys(error).forEach(function(key) {
+          flash += key + ": " + error[key] + "\n";
+        });
+      } else if (typeof error == "string") {
+        flash = error;
       } else {
-        flash = "Server doesn't respond. Sorry m(__)m"
+        flash = "Server doesn't respond. Sorry m(__)m";
       }
-      context.commit("updateFlash", flash)   
+      context.commit("updateFlash", flash);
     }
   }
 

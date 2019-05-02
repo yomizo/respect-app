@@ -41,7 +41,9 @@ export default {
     },
     isToken() {
       if(!this.token) {
-        this.$store.commit('updateFlash', "Please Signin")
+        this.$store.commit('updateFlash', "If you mark the map, Please Signin")
+        this.$store.commit('updateIsSnackBar')
+        this.$store.commit('updateSnackBarColor', {color: "pink accent-3"})
         return true
       }
     },
