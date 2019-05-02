@@ -6,7 +6,7 @@ module V1
       if signin_user&.authenticate(signin_params[:password])
         render json: {id: signin_user.id, token: signin_user.token}, adapter: :json
       else
-        render json: {error: "認証出来ませんでした"}, status: 422
+        render json: {error: "Unauthorized"}, status: 422
       end
       
     end

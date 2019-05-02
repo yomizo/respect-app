@@ -115,6 +115,7 @@ const store = new Vuex.Store({
           router.push("/");
         })
         .catch(error => {
+          console.log(error.response.data.error.email[0])
           context.commit("updateFlash", "Sorry failed")
         });
     },
@@ -124,13 +125,19 @@ const store = new Vuex.Store({
       axios
         .post(URL_BASE + url, { user: params })
         .then(res => {
-          context.commit("updateFlash", "Signin Success!");
-          context.commit("updateToken", { token: res.data.token });
+          context.commit("updateFlash", "Signin Success!")
+          context.commit("updateToken", { token: res.data.token })
           context.commit("updateUserId", { userId: res.data.id })
           router.push("/");
         })
         .catch(error => {
-          context.commit("updateFlash", error.response.data.error);
+          let flash = ""
+          if (error.response.status == 422) {
+            flash = "Authentication failed"
+          } else {
+            flash = "Server doesn't respond. Sorry m(__)m"
+          }
+          context.commit("updateFlash", flash);
         });
     },
 
