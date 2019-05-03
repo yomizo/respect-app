@@ -63,6 +63,11 @@ GEM
     crass (1.0.4)
     diff-lcs (1.3)
     erubi (1.8.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
+      railties (>= 3.0.0)
     faker (1.9.3)
       i18n (>= 0.7)
     ffi (1.10.0)
@@ -152,6 +157,8 @@ GEM
     ruby_dep (1.5.0)
     spring (2.0.2)
       activesupport (>= 4.2)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -180,6 +187,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   bullet
   byebug
+  factory_bot_rails (~> 4.11)
   faker
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
@@ -190,6 +198,7 @@ DEPENDENCIES
   rails (~> 5.2.3)
   rspec-rails (~> 3.7)
   spring
+  spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
 
