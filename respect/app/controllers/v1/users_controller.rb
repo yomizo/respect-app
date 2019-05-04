@@ -1,7 +1,7 @@
 module V1
   class UsersController < ApplicationController
-    before_action :set_user, only: [:show, :update, :destroy]
-    before_action :authenticate, except: [:index, :create]
+    before_action :set_user, only: [:show, :update, :destroy] # need to authorization
+    before_action :authenticate, except: [:create] # need to authenticate
     
 
     def index
