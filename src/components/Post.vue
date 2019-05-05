@@ -114,7 +114,7 @@
         // add_marker and delete tmpMarker
         this.messages.forEach((message, i) => {
           if (message.toggle) {
-            let respect = i
+            let respect = i // respect is 0 or 1
             this.marker.setIcon(this.messages[i].src)
             this.marker.addListener('click', function(e){
               // get latlng data

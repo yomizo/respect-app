@@ -201,6 +201,7 @@ const store = new Vuex.Store({
           context.commit("updateFlash", "Post is deleted!");
           // redirect
           router.push('/')
+          context.commit('updateDialog')
         })
         .catch(error => {
           context.commit("updateIsSnackBar");
