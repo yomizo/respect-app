@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "Posts", type: :request do
-  before "generate test_user" do
+  before "generate test_post" do
     @post = FactoryBot.create(:post)
-    @user = FactoryBot.create(:user, name: "request_user")
     @post_params = FactoryBot.attributes_for(:post)
-    # @user_params = FactoryBot.attributes_for(:user)
   end
 
   #

@@ -9,7 +9,7 @@ module V1
     end
 
     def show
-      metoo = json: @metoo, adapter: :json
+      render json: @metoo, adapter: :json
     end
   
     def create
@@ -29,7 +29,7 @@ module V1
     private
 
     def set_metoo
-      @metoo = Metoo.find(params[:id])
+      @metoo = Metoo.find(id: params[:id])
       authorize @metoo
     end
     # permition
