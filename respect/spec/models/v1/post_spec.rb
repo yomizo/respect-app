@@ -5,7 +5,6 @@ RSpec.describe Post, type: :model do
   # 前提postを作成
   before "generates associated data from a factory" do
     @post = FactoryBot.create(:post)
-    puts "This user's post is #{@post.user.inspect}"
   end
 
 
@@ -23,7 +22,6 @@ RSpec.describe Post, type: :model do
         @post.comment = nil
         expect(@post).to be_valid
       end
-
     end
 
 
@@ -52,7 +50,6 @@ RSpec.describe Post, type: :model do
         @post.user_id = nil
         expect(@post).to_not be_valid
       end
-
     end
   end
 

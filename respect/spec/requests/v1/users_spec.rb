@@ -6,6 +6,7 @@ RSpec.describe "Users", type: :request do
     @user_params = FactoryBot.attributes_for(:user)
   end
 
+  #
   describe "GET /user" do
     # header　なしの リクエスト(400)
     it "GET user index unworks! without header" do
@@ -39,21 +40,24 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  #
   describe "POST /user" do
+    # 新規登録 OK(201)
     it "POST user create works!" do
       new_user_params = FactoryBot.attributes_for(:user, name: "new_user")
       post "/users", params: {user: new_user_params}
       expect(response).to have_http_status(201)
     end
   end
+
   # 
   describe "DELETE /user" do
-    # 自分の delete 
+    # 自分の delete(204)
     it "DELETE user works!" do
       delete "/users/#{@user.id}", headers: { 'Authorization' => "Token token=#{@user.token}"}
       expect(response).to have_http_status(204)
     end
-    # 他人の delete 403
+    # 他人の delete(403)
     it "DELETE other_user unworks!" do
       other_user = FactoryBot.create(:user)
       delete "/users/#{other_user.id}", headers: { 'Authorization' => "Token token=#{@user.token}"}
@@ -61,9 +65,9 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-
+  #
   describe "PATCH /user" do
-    # 自分の update 
+    # 自分の update OK(200)
     it "PATCH user works!" do
       @user_params = FactoryBot.attributes_for(:user, name: "update_name")
       patch "/users/#{@user.id}", 
@@ -71,7 +75,7 @@ RSpec.describe "Users", type: :request do
         params: {user: @user_params}
       expect(response).to have_http_status(200)
     end
-    # 他人の update 403
+    # 他人の update(403)
     it "PATCH other_user unworks!" do
       @user = FactoryBot.create(:user, name: "new_user")
       other_user = FactoryBot.create(:user)
