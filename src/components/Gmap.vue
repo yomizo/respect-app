@@ -83,8 +83,9 @@ export default {
   beforeCreate(){
     // set posts_json
     this.$store.dispatch('markerList', ['/posts'])
-    let vm = this
+
     // ユーザーの現在地の取得
+    let vm = this
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         let pos = {
@@ -112,6 +113,7 @@ export default {
     this.map.mapTypes.set('styled_map', this.styledMapType)
     this.map.setMapTypeId('styled_map')
     // // move to current position
+    console.log(this.center)
     // this.map.setCenter(this.center)
 
     //map click event listen
@@ -123,6 +125,9 @@ export default {
 
 
   watch: {
+    center: function(newCenter) {
+      this.map.setCenter(this.center)
+    },
     // After markerList is fill, allocate initial markers
     markerList: function(newMarkerList) {
       let vm = this
