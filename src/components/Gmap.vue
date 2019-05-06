@@ -4,14 +4,18 @@
 
 
 <script>
+import mapStyle from "../assets/gmapStyle.json"
+
+
 export default {
   data(){
     return {
       map: null,
+      mapStyle: mapStyle,
       markers: [],
       iconBase: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/',
-      center: {lat: -25.363,lng: 131.044},
-      zoom: 6,
+      center: {lat: 35.681236,lng: 139.767125},
+      zoom: 15,
       icons: {
         cheer: 'fight55.png',
         thanks: 'heart55.png',
@@ -29,6 +33,9 @@ export default {
     },
     token: {
       get() { return this.$store.getters.token }
+    },
+    styledMapType: function(){
+      return new google.maps.StyledMapType(this.mapStyle)
     }
   },
   
@@ -76,6 +83,22 @@ export default {
   beforeCreate(){
     // set posts_json
     this.$store.dispatch('markerList', ['/posts'])
+    let vm = this
+    // ユーザーの現在地の取得
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        let pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        vm.center = pos
+      }, function(error) {
+          alert(error)
+          console.log(vm.center)
+        })
+    } else {
+      alert("Can't get your position")
+    }    
   },  
 
   mounted(){
@@ -84,6 +107,12 @@ export default {
       center: this.center,
       zoom: this.zoom
     })  
+    
+    // apply map style(color...)
+    this.map.mapTypes.set('styled_map', this.styledMapType)
+    this.map.setMapTypeId('styled_map')
+    // // move to current position
+    // this.map.setCenter(this.center)
 
     //map click event listen
     let vm = this
@@ -95,10 +124,10 @@ export default {
 
   watch: {
     // After markerList is fill, allocate initial markers
-    markerList: function(newVal, oldVal) {
+    markerList: function(newMarkerList) {
       let vm = this
-      if(newVal){
-        newVal.forEach(function(post) {
+      if(newMarkerList){
+        newMarkerList.forEach(function(post) {
           var marker = new google.maps.Marker({
             position: {lat: post.lat, lng: post.lng},
             icon: vm.icons[post.respect],
@@ -109,7 +138,7 @@ export default {
             // get latlng data
             let latLng = e.latLng
             // marker postData using latlng in markerList
-            let postData = newVal.filter(function(item, i){
+            let postData = newMarkerList.filter(function(item, i){
               let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
               if (storedLatLng.equals(latLng)) return true
             })
