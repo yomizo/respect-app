@@ -67,6 +67,9 @@ const store = new Vuex.Store({
     updateDialog(state) {
       state.dialog = !state.dialog;
     },
+    updateMap(state, payload) {
+      state.map = payload.map;
+    },
     updateMarker(state, payload) {
       state.marker = payload.tempMarker;
       state.map = payload.map;

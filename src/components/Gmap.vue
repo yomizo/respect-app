@@ -1,11 +1,12 @@
 <template>
-  <div id="map"></div>
+  <div>
+    <div id="map"></div>
+  </div>
 </template>
 
 
 <script>
 import mapStyle from "../assets/gmapStyle.json"
-
 
 export default {
   data(){
@@ -13,7 +14,6 @@ export default {
       map: null,
       mapStyle: mapStyle,
       markers: [],
-      iconBase: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/',
       center: {lat: 35.681236,lng: 139.767125},
       zoom: 15,
       icons: {
@@ -95,7 +95,6 @@ export default {
         vm.center = pos
       }, function(error) {
           alert(error)
-          console.log(vm.center)
         })
     } else {
       alert("Can't get your position")
@@ -106,28 +105,31 @@ export default {
     //initMap
     this.map = new google.maps.Map(document.getElementById('map'),{
       center: this.center,
-      zoom: this.zoom
+      zoom: this.zoom,
+      disableDefaultUI: true
     })  
     
     // apply map style(color...)
     this.map.mapTypes.set('styled_map', this.styledMapType)
     this.map.setMapTypeId('styled_map')
-    // // move to current position
-    console.log(this.center)
-    // this.map.setCenter(this.center)
-
+    
     //map click event listen
     let vm = this
     this.map.addListener('click', function(e){
       vm.makeMarker(e.latLng, vm.map) //will change that popup modal
     })
+
+    // update store.state.map
+    this.$store.commit('updateMap', {map: this.map})
   },
 
 
   watch: {
+    // if user allowed getting location, move to center
     center: function(newCenter) {
       this.map.setCenter(this.center)
     },
+
     // After markerList is fill, allocate initial markers
     markerList: function(newMarkerList) {
       let vm = this

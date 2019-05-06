@@ -4,7 +4,8 @@
       <v-btn flat class="headline pink--text--accent-2 font-weight-bold" href="/">
         {{token}}
       </v-btn>
-    </v-toolbar-items>
+    </v-toolbar-items>    
+<!-- searchBox     -->
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
 <!-- all user btns       -->
@@ -67,6 +68,7 @@
         { title: 'Mypage', icon: 'question_answer', href:'/post-tmp' },
         { title: 'Logout', icon: 'question_answer', href:'/post-tmp' },        
       ],
+      searchWord: ""
     }),
 
     computed: {
@@ -79,4 +81,5 @@
 a {
   text-decoration: none;
 }
+
 </style>

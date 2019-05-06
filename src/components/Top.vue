@@ -5,6 +5,7 @@
         <PostsIndex/>
       </v-flex>
       <v-flex>
+        <SearchBox/>
         <Gmap/>
       </v-flex>
     </v-layout>
@@ -16,10 +17,11 @@
 <script>
 import Gmap from './Gmap'
 import PostsIndex from './PostsIndex'
+import SearchBox from './SearchBox'
 
 export default {
   components: {
-    Gmap, PostsIndex
+    Gmap, PostsIndex, SearchBox
   }
 }
 </script>
