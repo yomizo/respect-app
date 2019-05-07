@@ -17,7 +17,7 @@
         :key="i"  
         :to="btn.href"
         >
-        {{btn.title}}
+        <v-icon>{{btn.icon}}</v-icon>
       </v-btn>
 <!-- user btns -->
       <div v-if="token">
@@ -29,7 +29,7 @@
           :key="i"  
           :to="btn.href"
           >
-          {{btn.title}}
+          <v-icon>{{btn.icon}}</v-icon>
         </v-btn>
       </div>
 <!-- guesst btns       -->
@@ -42,7 +42,7 @@
           :key="i"  
           :to="btn.href"
           >
-          {{btn.title}}
+          <v-icon>{{btn.icon}}</v-icon>
         </v-btn>
       </div>
     </v-toolbar-items>
@@ -56,23 +56,30 @@
       title: "Respect!",
       drawer: false,
       btns: [
-        { title: 'Map', icon: 'add_location', href:'/'},
-        { title: 'Search', icon: 'search' },
+        { title: 'Map', icon: 'mdi-google-maps', href:'/'},
       ],
       guesstBtns:[
-        { title: 'SignUp', icon: 'mdi-user-add', href:'/signup' },
-        { title: 'SignIn', icon: '', href:'/signin' },
-         { title: 'About', icon: '', href:'' },
+        { title: 'SignUp', icon: 'mdi-account-plus', href:'/signup' },
+        { title: 'SignIn', icon: 'mdi-login', href:'/signin' },
+        { title: 'About', icon: 'mdi-information', href:'' },
       ],
       userBtns:[
-        { title: 'Mypage', icon: 'question_answer', href:'/post-tmp' },
-        { title: 'Logout', icon: 'question_answer', href:'/post-tmp' },        
+        { title: 'Mypage', icon: 'mdi-settings', href:'/post-tmp' },
+        { title: 'Logout', icon: 'mdi-logout', href:'/post-tmp' },        
       ],
       searchWord: ""
     }),
 
+    //
     computed: {
      token: { get() {return this.$store.getters.token} } 
+    },
+
+    //
+    methods: {
+      searchDialog() {
+
+      }
     }
   }
 </script>

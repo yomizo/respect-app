@@ -24,7 +24,7 @@ const store = new Vuex.Store({
     markerList: null,
     flash: null,
     isSnackBar: false,
-    snackBarColor: null,
+    snackBarColor: SUCCESS,
     token: null,
     postData: null,
     userId: null

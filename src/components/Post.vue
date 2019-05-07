@@ -1,61 +1,59 @@
 <template>
-  <v-layout row justify-center >
-    <v-dialog
-      v-model="dialog"
-      max-width="290"
-      persistent
-    >
-      <v-card class="opacity grey darken-4 pa-2">
-        <v-card-actions>
-          <v-btn @click="isCancel" 
-            icon 
-            color="pink accent-2"
-            flat
-            small>
-            <v-icon>arrow_back</v-icon>
-          </v-btn>
-          <v-spacer></v-spacer>          
-        </v-card-actions>
-        <v-card-text class="title text-xs-center white--text">
-          RESPECTしますか？
-        </v-card-text>
+  <v-dialog
+    v-model="dialog"
+    max-width="290"
+    persistent
+  >
+    <v-card class="opacity grey darken-4 pa-2">
+      <v-card-actions>
+        <v-btn @click="isCancel" 
+          icon 
+          color="pink accent-2"
+          flat
+          small>
+          <v-icon>arrow_back</v-icon>
+        </v-btn>
+        <v-spacer></v-spacer>          
+      </v-card-actions>
+      <v-card-text class="title text-xs-center white--text">
+        RESPECTしますか？
+      </v-card-text>
 
-        <v-card-text class="text-xs-center">
-          <v-btn v-for="message in messages" 
-            fab
-            :depressed="message.toggle"
-            :large="message.toggle"
-            :dissabled="message.toggle"
-            color="pink lighten-5"
-            @click="toggle(message)"
-            >
-            <v-avatar size="48">
-              <img :src="message.src" alt="avatar">
-            </v-avatar>
-          </v-btn>
-        </v-card-text>
-        <v-textarea v-model="comment"
-          label="Comment"
-          outline
-          auto-grow
-          counter=140
+      <v-card-text class="text-xs-center">
+        <v-btn v-for="message in messages" 
+          fab
+          :depressed="message.toggle"
+          :large="message.toggle"
+          :dissabled="message.toggle"
           color="pink lighten-5"
-          dark
-          ></v-textarea>
-        <v-card-text class="text-xs-center">
-          <v-btn
-            round
-            dark
-            fab
-            color="pink accent-2"
-            @click="isOk"
+          @click="toggle(message)"
           >
-           <v-icon>add_location</v-icon>
-          </v-btn>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+          <v-avatar size="48">
+            <img :src="message.src" alt="avatar">
+          </v-avatar>
+        </v-btn>
+      </v-card-text>
+      <v-textarea v-model="comment"
+        label="Comment"
+        outline
+        auto-grow
+        counter=140
+        color="pink lighten-5"
+        dark
+        ></v-textarea>
+      <v-card-text class="text-xs-center">
+        <v-btn
+          round
+          dark
+          fab
+          color="pink accent-2"
+          @click="isOk"
+        >
+          <v-icon>add_location</v-icon>
+        </v-btn>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>

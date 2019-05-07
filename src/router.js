@@ -9,7 +9,7 @@ import SignUp from './components/SignUp.vue'
 import Post from "./components/Post"
 import PostShow from "./components/PostShow"
 import PostEdit from "./components/PostEdit"
-
+import SearchBox from "./components/SearchBox";
 
 // regist as plugin
 Vue.use(VueRouter)
@@ -23,7 +23,8 @@ const router = new VueRouter({
       children: [
         { name: "post", path: "", component: Post },
         { name: "postshow", path: "postshow", component: PostShow },
-        { name: "postedit", path: "postedit", component: PostEdit }
+        { name: "postedit", path: "postedit", component: PostEdit },
+        { name: "searchbox", path: "searchbox", component: SearchBox }
       ]
     },
     { path: "/signin", component: SignIn },
