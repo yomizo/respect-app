@@ -9,41 +9,62 @@
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
 <!-- all user btns       -->
-      <v-btn
-        class="pink accent-2 white--text"
+      <v-tooltip
+        bottom
         v-for="(btn, i) in btns"
-        fab
-        ma-1
-        :key="i"  
-        :to="btn.href"
-        >
-        <v-icon>{{btn.icon}}</v-icon>
-      </v-btn>
+        :key="i">
+        <template v-slot:activator="{on}">
+          <v-btn
+            v-on="on"
+            class="pink accent-2 white--text"
+            fab
+            ma-1
+            :to="btn.href"
+            >
+            <v-icon>{{btn.icon}}</v-icon>
+          </v-btn>
+        </template>
+        <span>{{btn.title}}</span>
+      </v-tooltip>
 <!-- user btns -->
       <div v-if="token">
-        <v-btn
-          class="pink accent-2 white--text"
+        <v-tooltip
+          bottom
           v-for="(btn, i) in userBtns"
-          fab
-          ma-1
-          :key="i"  
-          :to="btn.href"
-          >
-          <v-icon>{{btn.icon}}</v-icon>
-        </v-btn>
+          :key="i">
+          <template v-slot:activator="{on}">
+            <v-btn
+              v-on="on"
+              class="pink accent-2 white--text"
+              fab
+              ma-1
+              :to="btn.href"
+              >
+              <v-icon>{{btn.icon}}</v-icon>
+            </v-btn>
+          </template>
+          <span>{{btn.title}}</span>
+        </v-tooltip>
       </div>
 <!-- guesst btns       -->
       <div v-else>
-        <v-btn
-          class="pink accent-2 white--text"
+        <v-tooltip
+          bottom
           v-for="(btn, i) in guesstBtns"
-          fab
-          ma-1
-          :key="i"  
-          :to="btn.href"
-          >
-          <v-icon>{{btn.icon}}</v-icon>
-        </v-btn>
+          :key="i">
+          <template v-slot:activator="{on}">
+            <v-btn
+              v-on="on"
+              class="pink accent-2 white--text"
+              fab
+              ma-1
+              :to="btn.href"
+              >
+              <v-icon>{{btn.icon}}</v-icon>
+            </v-btn>
+          </template>
+          <span>{{btn.title}}</span>
+        </v-tooltip>
       </div>
     </v-toolbar-items>
   </v-toolbar>

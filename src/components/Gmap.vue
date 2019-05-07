@@ -79,8 +79,9 @@ export default {
   
   //Life cycle
   beforeCreate(){
+    let defaultCenter = {lat: 35.681236,lng: 139.767125}
     // set posts_json
-    this.$store.dispatch('markerList', ['/posts'])
+    this.$store.dispatch('markerList', ['/posts', defaultCenter])
 
     // ユーザーの現在地の取得
     let vm = this
@@ -126,6 +127,7 @@ export default {
     // if user allowed getting location, move to center
     center: function(newCenter) {
       this.map.setCenter(this.center)
+      this.$store.dispatch('markerList', ['/posts', this.center])
     },
 
     // After markerList is fill, allocate initial markers

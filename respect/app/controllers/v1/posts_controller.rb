@@ -1,10 +1,19 @@
 module V1
   class PostsController < ApplicationController
     before_action :set_post, only: [:update, :destroy]
-    before_action :authenticate, except: [:index, :show]
+    before_action :authenticate, except: [:index, :show, :search]
 
     def index
-      posts = Post.order(created_at: :desc).limit(100)
+      posts = Post.order(created_at: :desc).limit(500)
+      render json: posts, adapter: :json
+    end
+
+    def search
+      lat_range = (params[:lat].to_f - 1.0)..(params[:lat].to_f + 1.0)
+      lng_range = (params[:lng].to_f - 1.0)..(params[:lng].to_f + 1.0)
+      posts = Post
+      .where(lat: lat_range)
+      .where(lng: lng_range)
       render json: posts, adapter: :json
     end
 

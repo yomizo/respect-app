@@ -113,9 +113,9 @@ const store = new Vuex.Store({
     },
 
     // Read initial markerList in DB
-    markerList(context, url) {
+    markerList(context, [url, params]) {
       axios
-        .get(URL_BASE + url)
+        .post(URL_BASE + url + "/search", params)
         .then(res => {
           context.commit("updateMarkers", { posts: res.data.posts });
         })
@@ -180,7 +180,8 @@ const store = new Vuex.Store({
           context.commit("updateSnackBarColor", { color: SUCCESS});          
           context.commit("updateFlash", "Post is created!");
           // update markerlist
-          context.dispatch("markerList", url);
+          let latLng = {lat: params.lat, lng: params.lng}
+          context.dispatch("markerList", [url, latLng]);
           // redirect
           router.push("/");
         })
