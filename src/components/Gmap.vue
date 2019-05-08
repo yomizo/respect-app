@@ -81,23 +81,7 @@ export default {
   beforeCreate(){
     let defaultCenter = {lat: 35.681236,lng: 139.767125}
     // set posts_json
-    this.$store.dispatch('markerList', ['/posts', defaultCenter])
-
-    // ユーザーの現在地の取得
-    let vm = this
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        let pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        vm.center = pos
-      }, function(error) {
-          alert(error)
-        })
-    } else {
-      alert("Can't get your position")
-    }    
+    this.$store.dispatch('markerList', ['/posts', defaultCenter])  
   },  
 
   mounted(){
@@ -124,12 +108,6 @@ export default {
 
 
   watch: {
-    // if user allowed getting location, move to center
-    center: function(newCenter) {
-      this.map.setCenter(this.center)
-      this.$store.dispatch('markerList', ['/posts', this.center])
-    },
-
     // After markerList is fill, allocate initial markers
     markerList: function(newMarkerList) {
       let vm = this

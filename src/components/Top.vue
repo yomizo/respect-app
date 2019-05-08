@@ -5,8 +5,8 @@
         <PostsIndex/>
       </v-flex>
       <v-flex>
-        <SearchBox/>
         <Gmap/>
+        <SearchBtns/>
       </v-flex>
     </v-layout>
     <router-view></router-view>
@@ -17,11 +17,11 @@
 <script>
 import Gmap from './Gmap'
 import PostsIndex from './PostsIndex'
-import SearchBox from './SearchBox'
+import SearchBtns from './SearchBtns'
 
 export default {
   components: {
-    Gmap, PostsIndex, SearchBox
+    Gmap, PostsIndex, SearchBtns
   }
 }
 </script>

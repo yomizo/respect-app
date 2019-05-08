@@ -95,13 +95,6 @@
     computed: {
      token: { get() {return this.$store.getters.token} } 
     },
-
-    //
-    methods: {
-      searchDialog() {
-
-      }
-    }
   }
 </script>
 

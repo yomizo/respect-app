@@ -10,6 +10,7 @@
 import Toolbar from './components/ToolBar'
 import SnackBar from './components/SnackBar'
 
+
 export default {
   name: 'App',
   components: {
