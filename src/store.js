@@ -7,6 +7,7 @@ import router from './router.js'
 
 // config
 const URL_BASE = 'http://localhost:3000'
+const IMAGEDIR = "/user_images/"
 const SUCCESS = "#009688"
 const DANGER = "#FF1744"
 
@@ -27,7 +28,8 @@ const store = new Vuex.Store({
     snackBarColor: SUCCESS,
     token: null,
     postData: null,
-    userId: null
+    userId: null,
+    userData: null,
   },
 
   getters: {
@@ -55,11 +57,17 @@ const store = new Vuex.Store({
     userId(state) {
       return state.userId;
     },
+    userData(state) {
+      return state.userData;
+    },    
     isSnackBar(state) {
       return state.isSnackBar;
     },
     snackBarColor(state) {
       return state.snackBarColor;
+    },
+    imageAddress() {
+      return URL_BASE + IMAGEDIR
     }
   },
 
@@ -86,6 +94,9 @@ const store = new Vuex.Store({
     updateUserId(state, payload) {
       state.userId = payload.userId;
     },
+    updateUserData(state, payload) {
+      state.userData = payload;
+    },    
     updateMarkers(state, payload) {
       state.markerList = payload.posts;
     },
@@ -164,6 +175,46 @@ const store = new Vuex.Store({
           context.commit("updateSnackBarColor", { color: DANGER});          
           context.dispatch("chooseError", error.response.data.error);
         });
+    },
+
+    // user show
+    showUser(context, url) {
+      axios
+        .get(URL_BASE + url + context.state.userId,
+          { headers: { Authorization: `Token ${context.state.token}` } }
+        )
+        .then(res => {
+          context.commit('updateUserData', res.data)
+          context.commit('updateDialog')
+          router.push("/mypage")
+        })
+        .catch(error => {
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: DANGER });
+          context.dispatch("chooseError", "ユーザーが見つかりません");          
+        })
+    },
+
+    //
+    editUser(context, [url, params]) {
+      console.log(params)
+      axios
+        .patch(
+          URL_BASE + url + context.state.userId,
+          { user: params },
+          { headers: { Authorization: `Token ${context.state.token}` } }
+      )
+        .then(res => {
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: SUCCESS });
+          context.commit("updateFlash", "Edit Complete!");       
+        })
+        .catch(error => {
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: DANGER });
+          context.dispatch("chooseError", error.response.data.error);          
+      })
+      
     },
 
     // post create

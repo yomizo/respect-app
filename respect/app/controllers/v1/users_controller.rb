@@ -10,7 +10,7 @@ module V1
     end
 
     def show
-      render json: @user, adapter: :json
+      render json: {name: @user.name, email: @user.email, image_name: @user.image_name}, adapter: :json
     end
 
     def create
@@ -39,6 +39,7 @@ module V1
 
     def set_user
       @user = User.find(params[:id])
+      # @user = @current_user
       authorize @user # pundit_helper
     end
 

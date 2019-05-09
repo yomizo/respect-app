@@ -30,21 +30,37 @@
       <div v-if="token">
         <v-tooltip
           bottom
-          v-for="(btn, i) in userBtns"
-          :key="i">
+          >
           <template v-slot:activator="{on}">
             <v-btn
+              @click="mypage"
               v-on="on"
               class="pink accent-2 white--text"
               fab
               ma-1
-              :to="btn.href"
               >
-              <v-icon>{{btn.icon}}</v-icon>
+              <v-icon>mdi-settings</v-icon>
             </v-btn>
           </template>
-          <span>{{btn.title}}</span>
+          <span>マイページ</span>
         </v-tooltip>
+        <v-tooltip
+          bottom
+          >
+          <template v-slot:activator="{on}">
+            <v-btn
+              @click="logout"
+              v-on="on"
+              class="pink accent-2 white--text"
+              fab
+              ma-1
+              to="/"
+              >
+              <v-icon>mdi-logout</v-icon>
+            </v-btn>
+          </template>
+          <span>ログアウト</span>
+        </v-tooltip>        
       </div>
 <!-- guesst btns       -->
       <div v-else>
@@ -85,8 +101,7 @@
         { title: 'About', icon: 'mdi-information', href:'' },
       ],
       userBtns:[
-        { title: 'Mypage', icon: 'mdi-settings', href:'/post-tmp' },
-        { title: 'Logout', icon: 'mdi-logout', href:'/post-tmp' },        
+        { title: 'Mypage', icon: 'mdi-settings', href:'/post-tmp' },      
       ],
       searchWord: ""
     }),
@@ -95,6 +110,19 @@
     computed: {
      token: { get() {return this.$store.getters.token} } 
     },
+
+    //
+    methods: {
+      logout() {
+        this.$store.commit('updateToken', {token: null})
+        this.$store.commit('updateFlash', "ログオフしました")
+        this.$store.commit('updateIsSnackBar')
+        this.$store.commit('updateSnackBarColor', {color: "#FF1744"})
+      },
+      mypage() {
+        this.$store.dispatch('showUser', "/users/")
+      }
+    }
   }
 </script>
 
