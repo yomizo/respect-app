@@ -10,7 +10,8 @@ module V1
     end
 
     def show
-      render json: {name: @user.name, email: @user.email, image_name: @user.image_name}, adapter: :json
+      image_link = url_for(@user.avatar_image) if @user.avatar_image.attached?
+      render json: {name: @user.name, email: @user.email, image_name: image_link}, adapter: :json
     end
 
     def create
@@ -24,6 +25,7 @@ module V1
 
     def update
       if @user.update(user_params)
+        @user.avatar(user_params[:image])
         render json: @user, adapter: :json, status: 200
       else
         render json: { error: @user.errors }, status: 422
@@ -39,13 +41,12 @@ module V1
 
     def set_user
       @user = User.find(params[:id])
-      # @user = @current_user
       authorize @user # pundit_helper
     end
 
     # permition
     def user_params
-      params.require(:user).permit(:name, :email, :password, :image_name)
+      params.require(:user).permit(:name, :email, :password, :image)
     end
   end
 end

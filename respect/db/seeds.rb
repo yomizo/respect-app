@@ -12,7 +12,7 @@ users = (1..50).map do
     name: Faker::Name.name,
     password: Faker::Lorem.characters(16),
     email: Faker::Internet.email,
-    image_name: Faker::File.file_name('path/to')
+    # image_name: Faker::File.file_name('path/to')
   )
 end
 

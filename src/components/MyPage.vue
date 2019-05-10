@@ -1,23 +1,29 @@
 <template>
   <v-layout row justify-center>
     <v-dialog v-model="dialog" persistent max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">My Page</span>
-        </v-card-title>
+      <v-card class="opacity grey darken-4 pa-2">
+        <v-card-actions>
+          <v-btn
+            @click="closeDialog"
+            icon
+            color="pink accent-2"
+            flat
+            >
+            <v-icon>arrow_back</v-icon>
+          </v-btn>
+        </v-card-actions>
+        <v-card-text class="headline font-weight-bold text-xs-center white--text">My Page</v-card-text>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex text-xs-center>
-                <v-avatar size="150px" v-if="imageUrl">
+                <v-avatar class="uploadImage" @click='pickFile' size="150px" v-if="imageUrl">
                   <v-img :src="imageUrl" alt="avatar"></v-img>
                 </v-avatar>
-                <v-avatar size="150px" v-else>
-                  <v-img :src="imageAddressName" alt="avatar"></v-img>
-                </v-avatar>                
-              </v-flex>
-              <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
-                <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+                <v-avatar class="uploadImage" @click='pickFile' size="150px" v-else>
+                  <v-img :src="defaultImageName" alt="avatar"></v-img>
+                </v-avatar>                                
+              </v-flex>              
                 <input
                   type="file"
                   name="file"
@@ -26,23 +32,21 @@
                   accept="image/*"
                   @change="onFilePicked"
                 >
-              </v-flex>              
               <v-flex xs12>
-                <v-text-field v-model="userName" label="name" required></v-text-field>
+                <v-text-field color="pink accent-2" dark v-model="userName" label="name" required></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field v-model="userEmail" label="email" required></v-text-field>
+                <v-text-field color="pink accent-2" dark v-model="userEmail" label="email" required></v-text-field>
               </v-flex>              
               <v-flex xs12>
-                <v-text-field label="NewPassword" type="password" required></v-text-field>
+                <v-text-field color="pink accent-2" dark label="NewPassword" type="password" required></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click="closeDialog">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="editUser">Save</v-btn>
+          <v-btn color="pink accent-2" flat @click="editUser">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -58,7 +62,6 @@ export default {
 
     //
     imageUrl: '',
-    imageFile: ''
   }),
 
   //
@@ -70,7 +73,7 @@ export default {
     imageAddress: {
       get() { return this.$store.getters.imageAddress}
     },
-    imageAddressName: function() {
+    defaultImageName: function() {
       return this.imageAddress + this.imageName
     },
     userData: {
@@ -98,33 +101,22 @@ export default {
         if(this.imageName.lastIndexOf('.') <= 0) {
           return
         }
-        const fr = new FileReader()
-        fr.readAsDataURL(files[0])
+        const fr = new FileReader() //make instance
+        fr.readAsDataURL(files[0]) // read file
         fr.addEventListener('load', () => {
           this.imageUrl = fr.result
-          this.imageFile = files[0]
         })
       } else {
-        this.imageFile = ''
         this.imageUrl = ''
       }
     },
 
     //
     editUser(e) {
-      // let params = new FormData()
-      // let fileSelectDom = $('[name=\`file\`]')[0]
-      // let files = e.target.files
-
-      // params.append('name', this.userName)
-      // params.append('email', this.userEmail)      
-      // params.append('image_name', this.imageName)
-      // params.append('image', this.imageFile)
       let params = {
         name: this.userName,
         email: this.userEmail,
-        image_name: this.imageName,
-        image: this.imageFile
+        image: this.imageUrl
       }
       this.$store.dispatch('editUser', ["/users/", params])
     }
@@ -135,9 +127,15 @@ export default {
     this.userName = this.userData.name
     this.userEmail = this.userData.email
     if(this.userData.image_name) {
-      this.imageName = this.userData.image_name
+      this.imageUrl = this.userData.image_name
     }
   },
 }
 </script>
+
+<style>
+.uploadImage {
+  cursor: pointer;
+}
+</style>
 
