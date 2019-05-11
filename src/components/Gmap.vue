@@ -127,9 +127,10 @@ export default {
               let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
               if (storedLatLng.equals(latLng)) return true
             })
-            vm.$store.dispatch('setPostData', postData[0])
-            vm.$store.dispatch('setDialog')
-            vm.$router.push('/postshow') //redirect
+
+            vm.$store.dispatch('setPostData', "/posts/" + postData[0].id)
+            // vm.$store.dispatch('setDialog')
+            // vm.$router.push('/postshow') //redirect
           })          
         })
       }

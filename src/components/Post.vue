@@ -122,9 +122,7 @@
                 let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
                 if (storedLatLng.equals(latLng)) return true
               })
-              self.$store.dispatch('setPostData', postData[0])
-              self.$store.dispatch('setDialog')
-              self.$router.push('/postshow') //redirect              
+              self.$store.dispatch('setPostData', "/posts/" + postData[0].id)
             })
 
             // create record in DB

@@ -119,8 +119,24 @@ const store = new Vuex.Store({
     setMarker({ commit }, [tempMarker, map]) {
       commit("updateMarker", { tempMarker, map });
     },
-    setPostData({ commit }, postData) {
-      commit("updatePostData", { postData });
+    // setPostData({ commit}, postData) {
+    //   commit("updatePostData", { postData });
+    //               },
+    //
+    setPostData( context, url) {
+      axios
+        .get(URL_BASE + url, {
+        })
+        .then(res => {
+          context.commit("updatePostData", {postData: res.data});
+          context.commit("updateDialog");
+          router.push("/postshow");
+        })
+        .catch(error => {
+          context.commit("updateIsSnackBar");
+          context.commit("updateSnackBarColor", { color: DANGER });
+          context.dispatch("chooseError", "投稿が見つかりません");
+        });      
     },
 
     // Read initial markerList in DB
@@ -128,7 +144,7 @@ const store = new Vuex.Store({
       axios
         .post(URL_BASE + url + "/search", params)
         .then(res => {
-          context.commit("updateMarkers", { posts: res.data.posts });
+          context.commit("updateMarkers", { posts: res.data });
         })
         .catch(error => {
           context.commit("updateFlash", "Refresh Browser");

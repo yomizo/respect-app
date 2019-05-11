@@ -5,20 +5,41 @@ module V1
 
     def index
       posts = Post.order(created_at: :desc).limit(500)
+      posts = posts.map do |post|
+        user = User.find_by(id: post.user_id)
+        user.avatar_image.attached? ? image_link = url_for(user.avatar_image) : image_link = nil
+        post = post.attributes
+        post.merge(image:image_link, user_name: user.name)
+      end
+
       render json: posts, adapter: :json
     end
 
     def search
+      # filter with latlng & time
       lat_range = (params[:lat].to_f - 1.0)..(params[:lat].to_f + 1.0)
       lng_range = (params[:lng].to_f - 1.0)..(params[:lng].to_f + 1.0)
       posts = Post
       .where(lat: lat_range)
       .where(lng: lng_range)
+      .order(created_at: :desc)
+      .limit(500)
+      # get icon image
+      posts = posts.map do |post|
+        user = User.find_by(id: post.user_id)
+        user.avatar_image.attached? ? image_link = url_for(user.avatar_image) : image_link = nil
+        post = post.attributes
+        post.merge(image: image_link, user_name: user.name)
+      end      
       render json: posts, adapter: :json
     end
 
     def show
-      render json: @post, adapter: :json
+      post = Post.find_by(id: params[:id])
+      user = User.find_by(id: post.user_id)
+      user.avatar_image.attached? ? image_link = url_for(user.avatar_image) : image_link = nil
+      post = post.attributes.merge(image: image_link, user_name: user.name)
+      render json: post, adapter: :json
     end
 
     def create

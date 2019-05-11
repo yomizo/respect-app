@@ -14,6 +14,7 @@ class User < ApplicationRecord
   def avatar(image)
     if image.present? || rex_image(image) == ''
       content_type = create_extension(image)
+      # data:~の部分を削除
       contents = image.sub %r/data:((image|application)\/.{3,}),/, ''
       decoded_data = Base64.decode64(contents)
       filename = Time.zone.now.to_s + '.' + content_type

@@ -55,15 +55,16 @@
             </v-btn>
           </v-speed-dial>
         </v-card-actions>
-        <v-card-text dark class="text-xs-center">
-          <v-avatar size="36">
-            <img src="user_image/yomizou_face.png" alt="avatar">
-          </v-avatar>
-          {{postData.user.name}}
-        </v-card-text>
-        
         <v-card-title class="title">{{postData.respect}}</v-card-title>
-
+        <v-card-text dark class="text-xs-center">
+          <v-avatar v-if="postData.image" size="36">
+            <img :src="postData.image" alt="avatar">
+          </v-avatar>
+          <v-avatar v-else size="36">
+            <img src="default_icon.png" alt="avatar">
+          </v-avatar>          
+          {{postData.user_name}}
+        </v-card-text>
         <v-card-text v-model="postData.commnent" class="text-xs-center">
           {{postData.comment}}
         </v-card-text>        
@@ -159,7 +160,7 @@
 
     //
     created() {
-      if(this.postData.user.id == this.userId) {
+      if(this.postData.user_id == this.userId) {
         this.isId = true
       }
     }
