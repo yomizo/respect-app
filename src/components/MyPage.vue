@@ -126,8 +126,8 @@ export default {
   created() {
     this.userName = this.userData.name
     this.userEmail = this.userData.email
-    if(this.userData.image_name) {
-      this.imageUrl = this.userData.image_name
+    if(this.userData.image) {
+      this.imageUrl = this.userData.image
     }
   },
 }

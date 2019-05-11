@@ -11,7 +11,7 @@ module V1
 
     def show
       image_link = url_for(@user.avatar_image) if @user.avatar_image.attached?
-      render json: {name: @user.name, email: @user.email, image_name: image_link}, adapter: :json
+      render json: {name: @user.name, email: @user.email, image: image_link}, adapter: :json
     end
 
     def create

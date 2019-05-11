@@ -1,10 +1,5 @@
 <template>
   <v-toolbar app fixed flat color="transparent">
-    <v-toolbar-items>
-      <v-btn flat class="headline pink--text--accent-2 font-weight-bold" href="/">
-        {{token}}
-      </v-btn>
-    </v-toolbar-items>    
 <!-- searchBox     -->
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
@@ -81,17 +76,22 @@
           </template>
           <span>{{btn.title}}</span>
         </v-tooltip>
-      </div>
+      </div>      
+    </v-toolbar-items>
+    <v-toolbar-items class="hidden-md-and-up">
+      <Menu/>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
+import Menu from "./Menu"
 
   export default {
+    components: {Menu},
     data: () => ({
       title: "Respect!",
-      drawer: false,
+      // drawer: false,
       btns: [
         { title: 'Map', icon: 'mdi-google-maps', href:'/'},
       ],
@@ -108,20 +108,22 @@
 
     //
     computed: {
-     token: { get() {return this.$store.getters.token} } 
+      token: { get() {return this.$store.getters.token} },   
     },
 
     //
     methods: {
       logout() {
         this.$store.commit('updateToken', {token: null})
+        this.$store.commit('updateUserId', {userId: null})
+        this.$store.commit('updateUserData', null)
         this.$store.commit('updateFlash', "ログオフしました")
         this.$store.commit('updateIsSnackBar')
         this.$store.commit('updateSnackBarColor', {color: "#FF1744"})
       },
       mypage() {
         this.$store.dispatch('showUser', "/users/")
-      }
+      },
     }
   }
 </script>

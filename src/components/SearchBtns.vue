@@ -11,7 +11,7 @@
         bottom
         right
         fixed
-        color="pink accent-3"
+        color="pink accent-2"
         to="/searchbox"
         >
         <v-icon>mdi-map-search</v-icon>
@@ -30,7 +30,7 @@
         bottom
         right
         fixed
-        color="pink accent-3"
+        color="pink accent-2"
         >
         <v-icon>mdi-near-me</v-icon>
       </v-btn>

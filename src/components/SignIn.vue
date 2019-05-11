@@ -1,11 +1,13 @@
 <template>
-  <v-content class="grey darken-3">
+  <v-content class="blue-grey lighten-5">
     <v-container class="formx">
-      <v-card>
+      <v-card class="opacity grey darken-4 pa-2">
         <v-container>
-          <div class="headline font-weight-bold">SignIn</div>
+          <div class="white--text headline font-weight-bold">SignIn</div>
           <form>
             <v-text-field
+              dark
+              color="pink accent-2"
               v-model="email"
               v-validate="'required|email'"
               :error-messages="errors.collect('email')"
@@ -13,7 +15,9 @@
               data-vv-name="email"
               required
             ></v-text-field>
-            <v-text-field 
+            <v-text-field
+              dark
+              color="pink accent-2"            
               v-model="password"
               v-validate="'required'" 
               name="password" 
@@ -22,8 +26,8 @@
               placeholder="Password" 
               ref="password"></v-text-field>
             <div class="text-xs-right">
-              <v-btn @click="submit">submit</v-btn>
-              <v-btn @click="clear">clear</v-btn>
+              <v-btn dark color="pink accent-2" @click="submit">submit</v-btn>
+              <v-btn dark color="pink accent-2" @click="clear">clear</v-btn>
             </div>
           </form>
         </v-container>
@@ -95,5 +99,9 @@
 <style>
 .formx {
   max-width: 768px
+}
+
+.opacity {
+  opacity: 0.9;
 }
 </style>

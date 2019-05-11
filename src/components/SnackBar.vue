@@ -6,9 +6,15 @@
     auto-height
     >
     {{flash}}
+    <v-btn
+      flat
+      dark
+      @click="isSnackBar = false"
+      >
+      <v-icon>mdi-close-circle</v-icon>
+    </v-btn>
   </v-snackbar>
 </template>
-
 
 <script>
 export default {

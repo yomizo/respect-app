@@ -129,8 +129,6 @@ export default {
             })
 
             vm.$store.dispatch('setPostData', "/posts/" + postData[0].id)
-            // vm.$store.dispatch('setDialog')
-            // vm.$router.push('/postshow') //redirect
           })          
         })
       }

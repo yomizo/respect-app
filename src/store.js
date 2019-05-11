@@ -29,7 +29,7 @@ const store = new Vuex.Store({
     token: null,
     postData: null,
     userId: null,
-    userData: null,
+    userData: null
   },
 
   getters: {
@@ -59,7 +59,7 @@ const store = new Vuex.Store({
     },
     userData(state) {
       return state.userData;
-    },    
+    },
     isSnackBar(state) {
       return state.isSnackBar;
     },
@@ -67,7 +67,7 @@ const store = new Vuex.Store({
       return state.snackBarColor;
     },
     imageAddress() {
-      return URL_BASE + IMAGEDIR
+      return URL_BASE + IMAGEDIR;
     }
   },
 
@@ -96,7 +96,7 @@ const store = new Vuex.Store({
     },
     updateUserData(state, payload) {
       state.userData = payload;
-    },    
+    },
     updateMarkers(state, payload) {
       state.markerList = payload.posts;
     },
@@ -123,12 +123,11 @@ const store = new Vuex.Store({
     //   commit("updatePostData", { postData });
     //               },
     //
-    setPostData( context, url) {
+    setPostData(context, url) {
       axios
-        .get(URL_BASE + url, {
-        })
+        .get(URL_BASE + url, {})
         .then(res => {
-          context.commit("updatePostData", {postData: res.data});
+          context.commit("updatePostData", { postData: res.data });
           context.commit("updateDialog");
           router.push("/postshow");
         })
@@ -136,7 +135,7 @@ const store = new Vuex.Store({
           context.commit("updateIsSnackBar");
           context.commit("updateSnackBarColor", { color: DANGER });
           context.dispatch("chooseError", "投稿が見つかりません");
-        });      
+        });
     },
 
     // Read initial markerList in DB
@@ -158,7 +157,7 @@ const store = new Vuex.Store({
         .then(res => {
           // flash message
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: SUCCESS});
+          context.commit("updateSnackBarColor", { color: SUCCESS });
           context.commit("updateFlash", "Welcome Respectful world!");
           // authentication
           context.commit("updateToken", { token: res.data.token });
@@ -167,7 +166,7 @@ const store = new Vuex.Store({
         })
         .catch(error => {
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: DANGER});          
+          context.commit("updateSnackBarColor", { color: DANGER });
           context.dispatch("chooseError", error.response.data.error);
         });
     },
@@ -179,16 +178,17 @@ const store = new Vuex.Store({
         .then(res => {
           // flash message
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: SUCCESS});          
+          context.commit("updateSnackBarColor", { color: SUCCESS });
           context.commit("updateFlash", "Signin Success!");
           // authentication
           context.commit("updateToken", { token: res.data.token });
           context.commit("updateUserId", { userId: res.data.id });
+          context.commit("updateUserData", res.data)
           router.push("/");
         })
         .catch(error => {
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: DANGER});          
+          context.commit("updateSnackBarColor", { color: DANGER });
           context.dispatch("chooseError", error.response.data.error);
         });
     },
@@ -196,19 +196,19 @@ const store = new Vuex.Store({
     // user show
     showUser(context, url) {
       axios
-        .get(URL_BASE + url + context.state.userId,
-          { headers: { Authorization: `Token ${context.state.token}` } }
-        )
+        .get(URL_BASE + url + context.state.userId, {
+          headers: { Authorization: `Token ${context.state.token}` }
+        })
         .then(res => {
-          context.commit('updateUserData', res.data)
-          context.commit('updateDialog')
-          router.push("/mypage")
+          context.commit("updateUserData", res.data);
+          context.commit("updateDialog");
+          router.push("/mypage");
         })
         .catch(error => {
           context.commit("updateIsSnackBar");
           context.commit("updateSnackBarColor", { color: DANGER });
-          context.dispatch("chooseError", "ユーザーが見つかりません");          
-        })
+          context.dispatch("chooseError", "ユーザーが見つかりません");
+        });
     },
 
     //
@@ -218,18 +218,17 @@ const store = new Vuex.Store({
           URL_BASE + url + context.state.userId,
           { user: params },
           { headers: { Authorization: `Token ${context.state.token}` } }
-      )
+        )
         .then(res => {
           context.commit("updateIsSnackBar");
           context.commit("updateSnackBarColor", { color: SUCCESS });
-          context.commit("updateFlash", "Edit Complete!");       
+          context.commit("updateFlash", "Edit Complete!");
         })
         .catch(error => {
           context.commit("updateIsSnackBar");
           context.commit("updateSnackBarColor", { color: DANGER });
-          context.dispatch("chooseError", error.response.data.error);          
-      })
-      
+          context.dispatch("chooseError", error.response.data.error);
+        });
     },
 
     // post create
@@ -243,17 +242,17 @@ const store = new Vuex.Store({
         .then(res => {
           // flash message
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: SUCCESS});          
+          context.commit("updateSnackBarColor", { color: SUCCESS });
           context.commit("updateFlash", "Post is created!");
           // update markerlist
-          let latLng = {lat: params.lat, lng: params.lng}
+          let latLng = { lat: params.lat, lng: params.lng };
           context.dispatch("markerList", [url, latLng]);
           // redirect
           router.push("/");
         })
         .catch(error => {
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: DANGER});          
+          context.commit("updateSnackBarColor", { color: DANGER });
           context.dispatch("chooseError", error.response.data.error);
         });
     },
@@ -267,15 +266,15 @@ const store = new Vuex.Store({
         .then(res => {
           // flash message
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: SUCCESS});          
+          context.commit("updateSnackBarColor", { color: SUCCESS });
           context.commit("updateFlash", "Post is deleted!");
           // redirect
-          router.push('/')
-          context.commit('updateDialog')
+          router.push("/");
+          context.commit("updateDialog");
         })
         .catch(error => {
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: DANGER});          
+          context.commit("updateSnackBarColor", { color: DANGER });
           context.dispatch("chooseError", error.response.data.error);
         });
     },
@@ -293,14 +292,14 @@ const store = new Vuex.Store({
         .then(res => {
           // flash message
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: SUCCESS});          
+          context.commit("updateSnackBarColor", { color: SUCCESS });
           context.commit("updateFlash", "Edit Complete!");
           // redirect
           router.push("/postshow");
         })
         .catch(error => {
           context.commit("updateIsSnackBar");
-          context.commit("updateSnackBarColor", { color: DANGER});          
+          context.commit("updateSnackBarColor", { color: DANGER });
           context.dispatch("chooseError", error.response.data.error);
         });
     },
