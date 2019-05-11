@@ -57,7 +57,7 @@
         </v-card-actions>
         <v-card-text dark class="text-xs-center">
           <v-avatar size="36">
-            <img src="/user/yomizou_face.png" alt="avatar">
+            <img src="user_image/yomizou_face.png" alt="avatar">
           </v-avatar>
           {{postData.user.name}}
         </v-card-text>

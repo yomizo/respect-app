@@ -197,7 +197,6 @@ const store = new Vuex.Store({
 
     //
     editUser(context, [url, params]) {
-      console.log(params)
       axios
         .patch(
           URL_BASE + url + context.state.userId,
