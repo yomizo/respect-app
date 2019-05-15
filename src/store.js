@@ -6,7 +6,8 @@ import router from './router.js'
 // import createPersistedState from "vuex-persistedstate";
 
 // config
-const URL_BASE = 'http://localhost:3000'
+const URL_BASE = "https://respect-backend.herokuapp.com";
+// const URL_BASE = "http://localhost:3000";
 const IMAGEDIR = "/user_images/"
 const SUCCESS = "#009688"
 const DANGER = "#FF1744"
