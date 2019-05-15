@@ -23,9 +23,9 @@
 
         <v-card-text class="text-xs-center">
           <v-avatar size="36">
-            <img :src="require('../assets/yomizou_face.png')" alt="avatar">
+            <img :src="postData.image" alt="avatar">
           </v-avatar>
-          {{postData.user.name}}
+          {{postData.user_name}}
         </v-card-text>
         <v-textarea 
           v-model="comment"
