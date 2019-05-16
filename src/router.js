@@ -11,6 +11,7 @@ import PostShow from "./components/PostShow"
 import PostEdit from "./components/PostEdit"
 import SearchBox from "./components/SearchBox"
 import MyPage from "./components/MyPage"
+import About from "./components/About/About";
 
 // regist as plugin
 Vue.use(VueRouter)
@@ -26,11 +27,12 @@ const router = new VueRouter({
         { name: "postshow", path: "postshow", component: PostShow },
         { name: "postedit", path: "postedit", component: PostEdit },
         { name: "searchbox", path: "searchbox", component: SearchBox },
-        { name: "mypage", path: "mypage", component: MyPage },
+        { name: "mypage", path: "mypage", component: MyPage }
       ]
     },
     { path: "/signin", component: SignIn },
-    { path: "/signup", component: SignUp }
+    { path: "/signup", component: SignUp },
+    { path: "/about", component: About }
   ]
 });
 

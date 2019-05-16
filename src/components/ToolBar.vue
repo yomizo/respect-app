@@ -57,11 +57,11 @@
           <span>ログアウト</span>
         </v-tooltip>        
       </div>
-<!-- guesst btns       -->
+<!-- guest btns       -->
       <div v-else>
         <v-tooltip
           bottom
-          v-for="(btn, i) in guesstBtns"
+          v-for="(btn, i) in guestBtns"
           :key="i">
           <template v-slot:activator="{on}">
             <v-btn
@@ -95,10 +95,10 @@ import Menu from "./Menu"
       btns: [
         { title: 'Map', icon: 'mdi-google-maps', href:'/'},
       ],
-      guesstBtns:[
+      guestBtns:[
         { title: 'SignUp', icon: 'mdi-account-plus', href:'/signup' },
         { title: 'SignIn', icon: 'mdi-login', href:'/signin' },
-        { title: 'About', icon: 'mdi-information', href:'' },
+        { title: 'About', icon: 'mdi-information', href:'/about' },
       ],
       userBtns:[
         { title: 'Mypage', icon: 'mdi-settings', href:'/post-tmp' },      

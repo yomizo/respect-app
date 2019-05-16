@@ -86,7 +86,7 @@
             </v-list-tile-content>
           </v-list-tile>          
         </v-list>
-<!-- GUESST         -->
+<!-- GUEST         -->
         <v-list class="pt-0" dense v-else>
           <v-list-tile
             @click="showSignUp"
@@ -130,7 +130,7 @@
         { title: 'About', icon: 'mdi-information' },
         { title: 'LogOut', icon: 'mdi-logout' },
       ],
-      userName: "GUESST",
+      userName: "GUEST",
       userImage: "default_icon.png"  
     }),
 
@@ -149,7 +149,8 @@
         }
       },
       showAbout() {
-        //
+        this.$router.push("/about")
+        this.closeMenu()
       },
       showMap() {
         this.$router.push("/")

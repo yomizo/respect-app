@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",
+    "aos": "^3.0.0-beta.6",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "vee-validate": "^2.2.4",
