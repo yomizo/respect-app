@@ -55,7 +55,12 @@
             </v-btn>
           </v-speed-dial>
         </v-card-actions>
-        <v-card-title class="title">{{postData.respect}}</v-card-title>
+        <!-- <v-card-title class="title">{{postData.respect}}</v-card-title> -->
+        <v-card-text class="text-xs-center">
+          <v-avatar>
+            <img :src="`${postData.respect}_55.png`" alt="">
+          </v-avatar>
+        </v-card-text>
         <v-card-text dark class="text-xs-center">
           <v-avatar v-if="postData.image" size="36">
             <img :src="postData.image" alt="avatar">

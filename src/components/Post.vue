@@ -20,8 +20,9 @@
       </v-card-text>
 
       <v-card-text class="text-xs-center">
-        <v-btn v-for="message in messages" 
+        <v-btn v-for="(message, i) in messages" 
           fab
+          :key="i"
           :depressed="message.toggle"
           :large="message.toggle"
           :dissabled="message.toggle"
@@ -63,12 +64,12 @@
         messages: [
           {
             name: "Thanks!",
-            src: "heart55.png",
+            src: "thanks_55.png",
             toggle: false
           },          
           {
             name: "Fight!",
-            src: "fight55.png",
+            src: "cheer_55.png",
             toggle: false,
           },          
         ],

@@ -15,8 +15,8 @@ export default {
       center: {lat: 35.681236,lng: 139.767125},
       zoom: 15,
       icons: {
-        cheer: 'fight55.png',
-        thanks: 'heart55.png',
+        cheer: 'cheer_55.png',
+        thanks: 'thanks_55.png',
       },
     }
   },
