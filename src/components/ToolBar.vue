@@ -2,6 +2,10 @@
   <v-toolbar app fixed flat color="transparent">
 <!-- searchBox     -->
     <v-spacer></v-spacer>
+    <v-btn dark class="pink accent-2" round @click="easyLogin">
+      テストユーザーで簡単ログイン
+    </v-btn>
+    <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
 <!-- all user btns       -->
       <v-tooltip
@@ -124,6 +128,13 @@ import Menu from "./Menu"
       mypage() {
         this.$store.dispatch('showUser', "/users/")
       },
+      easyLogin() {
+        let params = {
+          email: "test@gmail.com",
+          password: "test"
+        }
+        this.$store.dispatch('signin', ['/signin', params])
+      }
     }
   }
 </script>
