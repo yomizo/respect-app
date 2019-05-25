@@ -1,9 +1,10 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import SignUp from './components/SignUp'
 
 describe('SignUp', () => {
-  test('is a Vue instance', () => {
-    const wrapper = shallowMount(SignUp)
+  const wrapper = mount(SignUp)
+
+  it('is a Vue instance', () => {  
     expect(wrapper.isVueInstance()).toBeTruthy()
     expect(wrapper.element).toMatchSnapshot()
   })
