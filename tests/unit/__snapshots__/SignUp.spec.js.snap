@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUp is a Vue instance 1`] = `
+<v-content
+  class="blue-grey lighten-5"
+>
+  <v-container
+    class="formx"
+  >
+    <v-card
+      class="opacity grey darken-4 pa-2"
+    >
+      <v-container>
+        <v-card-text
+          class="headline white--text font-weight-bold"
+        >
+          SignUp
+        </v-card-text>
+         
+        <form>
+          <v-text-field
+            aria-invalid="false"
+            aria-required="true"
+            color="pink accent-2"
+            counter="10"
+            dark=""
+            data-vv-name="name"
+            error-messages=""
+            label="Name"
+            required=""
+          />
+           
+          <v-text-field
+            aria-invalid="false"
+            aria-required="true"
+            color="pink accent-2"
+            dark=""
+            data-vv-name="email"
+            error-messages=""
+            label="E-mail"
+            required=""
+          />
+           
+          <v-text-field
+            aria-invalid="false"
+            aria-required="true"
+            class=""
+            color="pink accent-2"
+            dark=""
+            name="password"
+            placeholder="Password"
+            type="password"
+          />
+           
+          <div
+            class="text-xs-right"
+          >
+            <v-btn
+              color="pink accent-2"
+              dark=""
+            >
+              submit
+            </v-btn>
+             
+            <v-btn
+              color="pink accent-2"
+              dark=""
+            >
+              clear
+            </v-btn>
+          </div>
+        </form>
+      </v-container>
+    </v-card>
+  </v-container>
+</v-content>
+`;
