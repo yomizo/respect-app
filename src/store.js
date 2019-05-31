@@ -314,6 +314,15 @@ const store = new Vuex.Store({
         flash = "Server doesn't respond. Sorry m(__)m";
       }
       context.commit("updateFlash", flash);
+    },
+
+    logout(context) {
+      context.commit('updateToken', { token: null })
+      context.commit('updateUserId', { userId: null })
+      context.commit('updateUserData', null)
+      context.commit('updateFlash', "ログオフしました")
+      context.commit('updateIsSnackBar')
+      context.commit('updateSnackBarColor', {color: SUCCESS})
     }
   }
   // for sessionStorage
