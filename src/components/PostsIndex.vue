@@ -22,22 +22,14 @@
   </v-list>
 </template>
 
-
 <script>
-  export default {
-    data () {
-      return {
-        
-      }
-    },
-
-    //
-    computed: {
-      markerList: {
-        get() { return this.$store.getters.markerList}
-      }
-    },
-  }
+export default {
+  computed: {
+    markerList: {
+      get() { return this.$store.getters.markerList}
+    }
+  },
+}
 </script>
 
 <style>

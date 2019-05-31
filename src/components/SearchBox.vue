@@ -36,6 +36,7 @@ export default {
       searchWord: "",
     }
   },
+
   computed: {
     map: {
       get() { return this.$store.getters.map }
@@ -45,6 +46,7 @@ export default {
       set() { this.$store.commit('setDialog')}
     }
   },
+
   methods: {
     // search function with google
     searchLocation() {
@@ -65,8 +67,6 @@ export default {
         }
       })
     },
-
-    //
     closeSearchBox() {
       this.$store.commit('updateDialog')
       this.$router.push('/')

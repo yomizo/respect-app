@@ -117,66 +117,61 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      fav: true,
-      menu: false,
-      message: false,
-      hints: true,
-      items: [
-        { title: 'Map', icon: 'mdi-google-maps' },
-        { title: 'SignUp', icon: 'mdi-account-plus' },
-        { title: 'SignIn', icon: 'mdi-login' },
-        { title: 'About', icon: 'mdi-information' },
-        { title: 'LogOut', icon: 'mdi-logout' },
-      ],
-      userName: "GUEST",
-      userImage: "default_icon.png"  
-    }),
+export default {
+  data: () => ({
+    fav: true,
+    menu: false,
+    message: false,
+    hints: true,
+    items: [
+      { title: 'Map', icon: 'mdi-google-maps' },
+      { title: 'SignUp', icon: 'mdi-account-plus' },
+      { title: 'SignIn', icon: 'mdi-login' },
+      { title: 'About', icon: 'mdi-information' },
+      { title: 'LogOut', icon: 'mdi-logout' },
+    ],
+    userName: "GUEST",
+    userImage: "default_icon.png"  
+  }),
 
-    computed:{
-      user: { get(){ return this.$store.getters.userData }}, 
-    },
+  computed:{
+    user: { get(){ return this.$store.getters.userData }}, 
+  },
 
-    methods: {
-      closeMenu() {
-        this.menu = false
-      },
-      getUser() {
-        if(this.user) {
-          this.userName = this.user.name
-          this.userImage = this.user.image
-        }
-      },
-      showAbout() {
-        this.$router.push("/about")
-        this.closeMenu()
-      },
-      showMap() {
-        this.$router.push("/")
-        this.closeMenu()
-      },
-      showSignUp() {
-        this.$router.push("/signup")
-        this.closeMenu()
-      },
-      showSignIn() {
-        this.$router.push("/signin")
-        this.closeMenu()
-      },            
-      showMyPage() {
-        this.$store.dispatch('showUser', "/users/")
-        this.closeMenu()
-      },
-      logout() {
-        this.$store.dispatch('logout')
-        this.closeMenu()
-      },      
+  methods: {
+    closeMenu() {
+      this.menu = false
     },
-  }
+    getUser() {
+      if(this.user) {
+        this.userName = this.user.name
+        this.userImage = this.user.image
+      }
+    },
+    showAbout() {
+      this.$router.push("/about")
+      this.closeMenu()
+    },
+    showMap() {
+      this.$router.push("/")
+      this.closeMenu()
+    },
+    showSignUp() {
+      this.$router.push("/signup")
+      this.closeMenu()
+    },
+    showSignIn() {
+      this.$router.push("/signin")
+      this.closeMenu()
+    },            
+    showMyPage() {
+      this.$store.dispatch('showUser', "/users/")
+      this.closeMenu()
+    },
+    logout() {
+      this.$store.dispatch('logout')
+      this.closeMenu()
+    },      
+  },
+}
 </script>
-
-<style>
-
-
-</style>

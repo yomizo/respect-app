@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
 //// Read component routing//////////////////
 import Top from './components/Top.vue'
 import SignIn from './components/SignIn.vue'
@@ -35,7 +34,6 @@ const router = new VueRouter({
     { path: "/about", component: About }
   ]
 });
-
 
 // VueRouter instance export
 export default router

@@ -48,8 +48,6 @@
 </template>
 
 <script>
-
-
 export default {
   data: () => ({
     show: true,
@@ -72,11 +70,13 @@ export default {
       { top: "50%", left: "45%", delay: "800"},      
     ],    
   }),
+
   methods: {
     isShow() {
       this.show = !this.show
     }
   },
+  
   mounted() {
     setTimeout(this.isShow, 2000)
   }
@@ -87,7 +87,6 @@ export default {
 .section {
   min-height: 100vh;
 }
-
 /* transision */
 .v-enter-active, .v-leave-active {
   transition: opacity 1s;
@@ -111,7 +110,6 @@ export default {
   background: url("../../assets/respectmap.png") center no-repeat;
   background-position: center;
 }
-
 /* typograph */
 h1 {
   text-shadow: 1px 2px 3px #424242

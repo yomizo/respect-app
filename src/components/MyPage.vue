@@ -59,12 +59,9 @@ export default {
     userName: "default",
     userEmail: "default@gmail.com",
     imageName: "default_icon.png",
-
-    //
     imageUrl: '',
   }),
 
-  //
   computed: {
     dialog: {
       get() { return this.$store.getters.dialog },
@@ -81,19 +78,16 @@ export default {
     },
   },
 
-  //
   methods: {
     closeDialog() {
       this.$store.commit('updateDialog')
       this.$router.push("/")
     },
 
-    //
     pickFile() {
       this.$refs.image.click()
     },
 
-    //
     onFilePicked (e) {
       const files = e.target.files
       if(files[0] !== undefined) {
@@ -111,7 +105,6 @@ export default {
       }
     },
 
-    //
     editUser(e) {
       let params = {
         name: this.userName,
@@ -122,7 +115,6 @@ export default {
     }
   },
 
-  //
   created() {
     this.userName = this.userData.name
     this.userEmail = this.userData.email

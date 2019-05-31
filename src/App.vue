@@ -17,11 +17,6 @@ export default {
     Toolbar,
     SnackBar,
   },
-  data () {
-    return {
-      //
-    }
-  },
 }
 </script>
 

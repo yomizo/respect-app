@@ -14,16 +14,8 @@ import Tutorial from './Tutorial'
 export default {
   components: {
     AboutTop, AboutDescription, Tutorial
-  },
-
-  data: () => ({
-  
-  }),
-
+  }
 }
 </script>
 
-<style>
-
-</style>
 

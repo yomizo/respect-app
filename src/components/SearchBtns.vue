@@ -67,7 +67,7 @@ export default {
       this.$store.dispatch('setDialog')
     }
   },
-  // lifecycle
+  
   beforeCreate() {
     // ユーザーの現在地の取得
     let vm = this
