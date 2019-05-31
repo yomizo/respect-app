@@ -5,6 +5,7 @@
         :key="index"
         avatar
         class="tile blue-grey lighten-5" 
+        @click="showPost(post)"
       >
         <v-list-tile-avatar v-if="post.image">
           <img :src="post.image">
@@ -27,8 +28,23 @@ export default {
   computed: {
     markerList: {
       get() { return this.$store.getters.markerList}
-    }
+    },
+    map: {
+      get() { return this.$store.getters.map}
+    },    
   },
+
+  methods: {
+    showPost(post) {
+      let latLng = new google.maps.LatLng(post.lat, post.lng)
+      let postData = this.markerList.filter(function(item, i){
+        let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
+        if (storedLatLng.equals(latLng)) return true
+      })
+      this.$store.dispatch('setPostData', "/posts/" + postData[0].id)
+      this.map.panTo(latLng)
+    }
+  }
 }
 </script>
 
