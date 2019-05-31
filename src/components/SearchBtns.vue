@@ -48,32 +48,25 @@ export default {
     }
   },
 
-  //
   computed: {
     map: {
       get() { return this.$store.getters.map }
     },
-    // dialog: {
-    //   get() { return this.$store.getters.dialog },
-    //   set() { this.$store.dispatch('setDialog') }
-    // },    
+    geoAlert: {
+      get() { return this.$store.getters.geoAlert }
+    }   
   },
 
-  //
   methods: {
     // 現在位置に移動
     movePosition() {
       this.map.setCenter(this.center)
       this.$store.dispatch('markerList', ['/posts', this.center])
     },
-
-    //
     raiseSearchBox() {
       this.$store.dispatch('setDialog')
-
     }
   },
-
   // lifecycle
   beforeCreate() {
     // ユーザーの現在地の取得
@@ -85,14 +78,13 @@ export default {
           lng: position.coords.longitude
         };
         vm.center = pos
-      }, function(error) {
-          alert(error)
-        })
-    } else {
-      alert("Can't get your position")
-    }        
+      },function() {if(vm.geoAlert) {
+          alert("Can't get your position")
+          vm.$store.commit('updateAlert')
+        }}
+      )
+    }       
   }
-
 }
 </script>
 

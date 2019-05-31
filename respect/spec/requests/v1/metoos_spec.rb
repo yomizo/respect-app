@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe "Metoos", type: :request do
-  before "generate test_metoo" do
+  before "generates associated data from a factory" do
+    # @user = FactoryBot.create(:user)
+    # @post = FactoryBot.create(:post)
     @metoo = FactoryBot.create(:metoo)
-    puts @metoo.user_id
-    # @metoo_params = FactoryBot.attributes_for(:metoo)
-    # puts @metoo_params
+    # @metoo_params = {user_id: @user.id, post_id: @post.id}
+    @metoo = FactoryBot.attributes_for(:metoo)
   end
 
   #
@@ -50,6 +51,7 @@ RSpec.describe "Metoos", type: :request do
 
   # 
   describe "DELETE /metoo" do
+    # puts @metoo
     # 自分のmetoo delete(204)
     it "DELETE metoo works!" do
       delete "/metoos/#{@metoo.id}", headers: { 'Authorization' => "Token token=#{@metoo.user.token}"}
@@ -64,20 +66,20 @@ RSpec.describe "Metoos", type: :request do
   end
 
   #
-  describe "PATCH /metoo" do
-    # 自分のmetoo update OK(200)
-    it "PATCH metoo works!" do
-      @metoo_params = FactoryBot.attributes_for(:metoo)
-      patch "/metoos/#{@metoo.id}", 
-        headers: { 'Authorization' => "Token token=#{@metoo.user.token}"},
-        params: {metoo: @metoo_params}
-      expect(response).to have_http_status(200)
-    end
-    # 他人のmetoo update(403)
-    it "PATCH other_user_metoo unworks!" do
-      other_user_metoo = FactoryBot.create(:metoo)
-      patch "/metoos/#{other_user_metoo.id}", headers: { 'Authorization' => "Token token=#{@metoo.user.token}"}
-      expect(response).to have_http_status(403)
-    end
-  end  
+  # describe "PATCH /metoo" do
+  #   # 自分のmetoo update OK(200)
+  #   it "PATCH metoo works!" do
+  #     @metoo_params = FactoryBot.attributes_for(:metoo)
+  #     patch "/metoos/#{@metoo.id}", 
+  #       headers: { 'Authorization' => "Token token=#{@metoo.user.token}"},
+  #       params: {metoo: @metoo_params}
+  #     expect(response).to have_http_status(200)
+  #   end
+  #   # 他人のmetoo update(403)
+  #   it "PATCH other_user_metoo unworks!" do
+  #     other_user_metoo = FactoryBot.create(:metoo)
+  #     patch "/metoos/#{other_user_metoo.id}", headers: { 'Authorization' => "Token token=#{@metoo.user.token}"}
+  #     expect(response).to have_http_status(403)
+  #   end
+  # end  
 end

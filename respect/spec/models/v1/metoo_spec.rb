@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe Metoo, type: :model do
   # metoo を作成
   before "generates associated data from a factory" do
-    @metoo = FactoryBot.create(:metoo)
+    @user = FactoryBot.create(:user)
+    @post = FactoryBot.create(:post)
+    @metoo = Metoo.new(user_id: @user.id, post_id: @post.id)
   end
 
   #
