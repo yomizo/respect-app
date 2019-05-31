@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://111.107.49.106:8080', 'http://localhost:8080',
+    origins 'http://localhost:8080',
             /\Ahttps:\/\/respects-3b626\.firebaseapp\.com(:\d+)?\z/
 
     resource '*',

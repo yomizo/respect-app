@@ -30,7 +30,8 @@ const store = new Vuex.Store({
     token: null,
     postData: null,
     userId: null,
-    userData: null
+    userData: null,
+    geoAlert: true,
   },
 
   getters: {
@@ -69,6 +70,9 @@ const store = new Vuex.Store({
     },
     imageAddress() {
       return URL_BASE + IMAGEDIR;
+    },
+    geoAlert(state) {
+      return state.geoAlert;
     }
   },
 
@@ -109,6 +113,9 @@ const store = new Vuex.Store({
     },
     updateFlash(state, payload) {
       state.flash = payload;
+    },
+    updateAlert(state) {
+      state.geoAlert = false;
     }
   },
 
@@ -117,13 +124,11 @@ const store = new Vuex.Store({
     setDialog({ commit }) {
       commit("updateDialog");
     },
+
     setMarker({ commit }, [tempMarker, map]) {
       commit("updateMarker", { tempMarker, map });
     },
-    // setPostData({ commit}, postData) {
-    //   commit("updatePostData", { postData });
-    //               },
-    //
+
     setPostData(context, url) {
       axios
         .get(URL_BASE + url, {})
@@ -138,7 +143,6 @@ const store = new Vuex.Store({
           context.dispatch("chooseError", "投稿が見つかりません");
         });
     },
-
     // Read initial markerList in DB
     markerList(context, [url, params]) {
       axios
@@ -150,7 +154,6 @@ const store = new Vuex.Store({
           context.commit("updateFlash", "Refresh Browser");
         });
     },
-
     // user create
     signup(context, [url, params]) {
       axios
@@ -171,7 +174,6 @@ const store = new Vuex.Store({
           context.dispatch("chooseError", error.response.data.error);
         });
     },
-
     // user authentication
     signin(context, [url, params]) {
       axios
@@ -193,7 +195,6 @@ const store = new Vuex.Store({
           context.dispatch("chooseError", error.response.data.error);
         });
     },
-
     // user show
     showUser(context, url) {
       axios
@@ -212,7 +213,6 @@ const store = new Vuex.Store({
         });
     },
 
-    //
     editUser(context, [url, params]) {
       axios
         .patch(
@@ -231,7 +231,6 @@ const store = new Vuex.Store({
           context.dispatch("chooseError", error.response.data.error);
         });
     },
-
     // post create
     createPost(context, [url, params]) {
       axios
@@ -257,7 +256,6 @@ const store = new Vuex.Store({
           context.dispatch("chooseError", error.response.data.error);
         });
     },
-
     // post delete
     deletePost(context, url) {
       axios
@@ -279,7 +277,6 @@ const store = new Vuex.Store({
           context.dispatch("chooseError", error.response.data.error);
         });
     },
-
     // post edit
     editPost(context, [url, comment]) {
       context.commit("updateComment", { comment });
@@ -304,7 +301,6 @@ const store = new Vuex.Store({
           context.dispatch("chooseError", error.response.data.error);
         });
     },
-
     // Error Common process
     chooseError(context, error) {
       let flash = "";
@@ -320,7 +316,6 @@ const store = new Vuex.Store({
       context.commit("updateFlash", flash);
     }
   }
-
   // for sessionStorage
   // plugins: [createPersistedState({
   //   storage: window.sessionStorage,
