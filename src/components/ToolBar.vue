@@ -116,12 +116,7 @@ import Menu from "./Menu"
     
     methods: {
       logout() {
-        this.$store.commit('updateToken', {token: null})
-        this.$store.commit('updateUserId', {userId: null})
-        this.$store.commit('updateUserData', null)
-        this.$store.commit('updateFlash', "ログオフしました")
-        this.$store.commit('updateIsSnackBar')
-        this.$store.commit('updateSnackBarColor', {color: "#FF1744"})
+        this.$store.dispatch('logout')
       },
       mypage() {
         this.$store.dispatch('showUser', "/users/")
