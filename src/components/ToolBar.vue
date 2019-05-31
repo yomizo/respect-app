@@ -2,7 +2,7 @@
   <v-toolbar app fixed flat color="transparent">
 <!-- searchBox     -->
     <v-spacer></v-spacer>
-    <v-btn dark class="pink accent-2" round @click="easyLogin">
+    <v-btn v-if="!token" dark class="pink accent-2" round @click="easyLogin">
       テストユーザーで簡単ログイン
     </v-btn>
     <v-spacer></v-spacer>
@@ -93,9 +93,9 @@ import Menu from "./Menu"
 
   export default {
     components: {Menu},
+    
     data: () => ({
       title: "Respect!",
-      // drawer: false,
       btns: [
         { title: 'Map', icon: 'mdi-google-maps', href:'/'},
       ],
@@ -109,13 +109,11 @@ import Menu from "./Menu"
       ],
       searchWord: ""
     }),
-
-    //
+    
     computed: {
       token: { get() {return this.$store.getters.token} },   
     },
-
-    //
+    
     methods: {
       logout() {
         this.$store.commit('updateToken', {token: null})
