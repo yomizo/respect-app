@@ -58,119 +58,109 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        messages: [
-          {
-            name: "Thanks!",
-            src: "thanks_55.png",
-            toggle: false
-          },          
-          {
-            name: "Fight!",
-            src: "cheer_55.png",
-            toggle: false,
-          },          
-        ],
-        comment: '',
-      }
+export default {
+  data () {
+    return {
+      messages: [
+        {
+          name: "Thanks!",
+          src: "thanks_55.png",
+          toggle: false
+        },          
+        {
+          name: "Fight!",
+          src: "cheer_55.png",
+          toggle: false,
+        },          
+      ],
+      comment: '',
+    }
+  },
+
+  computed: {
+    // defined vuex(store) variable
+    dialog: {
+      get() { return this.$store.getters.dialog },
+      set() { this.$store.dispatch('setDialog') }
     },
-
-
-    computed: {
-      // defined vuex(store) variable
-      dialog: {
-        get() { return this.$store.getters.dialog },
-        set() { this.$store.dispatch('setDialog') }
-      },
-      marker: {
-        get() { return this.$store.getters.marker },
-      },
-      map: {
-        get() { return this.$store.getters.map }
-      },
-      token: {
-        get() { return this.$store.getters.token }
-      },
-      searchList: {
-        get() { return this.$store.getters.searchList }
-      },      
+    marker: {
+      get() { return this.$store.getters.marker },
     },
+    map: {
+      get() { return this.$store.getters.map }
+    },
+    token: {
+      get() { return this.$store.getters.token }
+    },
+    searchList: {
+      get() { return this.$store.getters.searchList }
+    },      
+  },
 
-
-    methods: {
-      //
-      closeDialog() {
-        this.$store.dispatch('setDialog')
-        this.comment = ''
-      },
-
-      //vuex state.dialog update & add_marker
-      isOk() {
-        self = this
-        let isDelete = true // just default
-        // add_marker and delete tmpMarker
-        this.messages.forEach((message, i) => {
-          if (message.toggle) {
-            let respect = i // respect is 0 or 1
-            this.marker.setIcon(this.messages[i].src)
-            this.marker.addListener('click', function(e){
-              // get latlng data
-              let latLng = e.latLng
-              // search postData using latlng in searchList
-              let postData = self.searchList.filter(function(item, i){
-                let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
-                if (storedLatLng.equals(latLng)) return true
-              })
-              self.$store.dispatch('setPostData', "/posts/" + postData[0].id)
+  methods: {
+    closeDialog() {
+      this.$store.dispatch('setDialog')
+      this.comment = ''
+    },
+    //vuex state.dialog update & add_marker
+    isOk() {
+      self = this
+      let isDelete = true // just default
+      // add_marker and delete tmpMarker
+      this.messages.forEach((message, i) => {
+        if (message.toggle) {
+          let respect = i // respect is 0 or 1
+          this.marker.setIcon(this.messages[i].src)
+          this.marker.addListener('click', function(e){
+            // get latlng data
+            let latLng = e.latLng
+            // search postData using latlng in searchList
+            let postData = self.searchList.filter(function(item, i){
+              let storedLatLng = new google.maps.LatLng(item.lat, item.lng, false)
+              if (storedLatLng.equals(latLng)) return true
             })
-
-            // create record in DB
-            this.createPost(respect)
-            isDelete = false // marker isn't deleted
-          }
-          this.messages[i].toggle = false
-        })
-
-        // "setMap(null)" is delete marker
-        if (isDelete) { this.marker.setMap(null)}
-
-        this.closeDialog()
-      },
-
-      // push cancel btn
-      isCancel() {
-        this.marker.setMap(null)
-        this.closeDialog()
-        this.messages.forEach((msg,i) =>{
-          this.messages[i].toggle = false
-        })
-      },
-
-      // set this.messages[0~1].toggle
-      toggle(msg){
-        this.messages.forEach( (message, i) => {
-          if (message.name == msg.name ) {
-            this.messages[i].toggle = true
-          } else {
-            this.messages[i].toggle = false
-          }
-        })
-      },
-
-      //
-      createPost(respect) {
-        let params = {
-          respect: respect,
-          lat: this.marker.getPosition().lat(),
-          lng: this.marker.getPosition().lng(),
-          comment: this.comment,
+            self.$store.dispatch('setPostData', "/posts/" + postData[0].id)
+          })
+          // create record in DB
+          this.createPost(respect)
+          isDelete = false // marker isn't deleted
         }
-        this.$store.dispatch('createPost', ['/posts', params])
-      },
+        this.messages[i].toggle = false
+      })
+      // "setMap(null)" is delete marker
+      if (isDelete) { this.marker.setMap(null)}
+      this.closeDialog()
     },
-  }
+    // push cancel btn
+    isCancel() {
+      this.marker.setMap(null)
+      this.closeDialog()
+      this.messages.forEach((msg,i) =>{
+        this.messages[i].toggle = false
+      })
+    },
+    // set this.messages[0~1].toggle
+    toggle(msg){
+      this.messages.forEach( (message, i) => {
+        if (message.name == msg.name ) {
+          this.messages[i].toggle = true
+        } else {
+          this.messages[i].toggle = false
+        }
+      })
+    },
+
+    createPost(respect) {
+      let params = {
+        respect: respect,
+        lat: this.marker.getPosition().lat(),
+        lng: this.marker.getPosition().lng(),
+        comment: this.comment,
+      }
+      this.$store.dispatch('createPost', ['/posts', params])
+    },
+  },
+}
 </script>
 
 <style>

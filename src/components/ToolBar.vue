@@ -91,45 +91,45 @@
 <script>
 import Menu from "./Menu"
 
-  export default {
-    components: {Menu},
-    
-    data: () => ({
-      title: "Respect!",
-      btns: [
-        { title: 'Map', icon: 'mdi-google-maps', href:'/'},
-      ],
-      guestBtns:[
-        { title: 'SignUp', icon: 'mdi-account-plus', href:'/signup' },
-        { title: 'SignIn', icon: 'mdi-login', href:'/signin' },
-        { title: 'About', icon: 'mdi-information', href:'/about' },
-      ],
-      userBtns:[
-        { title: 'Mypage', icon: 'mdi-settings', href:'/post-tmp' },      
-      ],
-      searchWord: ""
-    }),
-    
-    computed: {
-      token: { get() {return this.$store.getters.token} },   
+export default {
+  components: {Menu},
+  
+  data: () => ({
+    title: "Respect!",
+    btns: [
+      { title: 'Map', icon: 'mdi-google-maps', href:'/'},
+    ],
+    guestBtns:[
+      { title: 'SignUp', icon: 'mdi-account-plus', href:'/signup' },
+      { title: 'SignIn', icon: 'mdi-login', href:'/signin' },
+      { title: 'About', icon: 'mdi-information', href:'/about' },
+    ],
+    userBtns:[
+      { title: 'Mypage', icon: 'mdi-settings', href:'/post-tmp' },      
+    ],
+    searchWord: ""
+  }),
+  
+  computed: {
+    token: { get() {return this.$store.getters.token} },   
+  },
+  
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
     },
-    
-    methods: {
-      logout() {
-        this.$store.dispatch('logout')
-      },
-      mypage() {
-        this.$store.dispatch('showUser', "/users/")
-      },
-      easyLogin() {
-        let params = {
-          email: "test@gmail.com",
-          password: "test"
-        }
-        this.$store.dispatch('signin', ['/signin', params])
+    mypage() {
+      this.$store.dispatch('showUser', "/users/")
+    },
+    easyLogin() {
+      let params = {
+        email: "test@gmail.com",
+        password: "test"
       }
+      this.$store.dispatch('signin', ['/signin', params])
     }
   }
+}
 </script>
 
 <style>

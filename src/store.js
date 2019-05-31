@@ -7,7 +7,6 @@ import router from './router.js'
 
 // config
 const URL_BASE = "https://respect-backend.herokuapp.com";
-// const URL_BASE = "http://localhost:3000";
 const IMAGEDIR = "/user_images/"
 const SUCCESS = "#009688"
 const DANGER = "#FF1744"
@@ -280,7 +279,6 @@ const store = new Vuex.Store({
     // post edit
     editPost(context, [url, comment]) {
       context.commit("updateComment", { comment });
-
       axios
         .patch(
           URL_BASE + url,

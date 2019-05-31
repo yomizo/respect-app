@@ -37,63 +37,63 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VeeValidate from 'vee-validate'
+import Vue from 'vue'
+import VeeValidate from 'vee-validate'
 
-  Vue.use(VeeValidate)
+Vue.use(VeeValidate)
 
-  export default {
-    $_veeValidate: {
-      validator: 'new'
-    },
+export default {
+  $_veeValidate: {
+    validator: 'new'
+  },
 
-    data: () => ({
-      email: '',
-      password: '',
-      dictionary: {
-        attributes: {
-          email: 'E-mail Address'
-          // custom attributes
+  data: () => ({
+    email: '',
+    password: '',
+    dictionary: {
+      attributes: {
+        email: 'E-mail Address'
+        // custom attributes
+      },
+      custom: {
+        name: {
+          required: () => 'Name can not be empty',
+          max: 'The name field may not be greater than 10 characters'
+          // custom messages
         },
-        custom: {
-          name: {
-            required: () => 'Name can not be empty',
-            max: 'The name field may not be greater than 10 characters'
-            // custom messages
-          },
-        }
-      }
-    }),
-
-    mounted () {
-      this.$validator.localize('en', this.dictionary)
-    },
-
-    methods: {
-      submit () {
-        var judge
-        this.$validator.validateAll().then((result) => {
-          if(!result) {
-            alert(this.errors.all())
-            return
-          }
-          this.postUser()
-        })
-      },
-      clear () {
-        this.email = ''
-        this.password = ''
-        this.$validator.reset()
-      },
-      postUser() {
-        var params = {
-          email: this.email, 
-          password: this.password
-          }
-        this.$store.dispatch('signin', ['/signin', params])
       }
     }
+  }),
+
+  mounted () {
+    this.$validator.localize('en', this.dictionary)
+  },
+
+  methods: {
+    submit () {
+      var judge
+      this.$validator.validateAll().then((result) => {
+        if(!result) {
+          alert(this.errors.all())
+          return
+        }
+        this.postUser()
+      })
+    },
+    clear () {
+      this.email = ''
+      this.password = ''
+      this.$validator.reset()
+    },
+    postUser() {
+      var params = {
+        email: this.email, 
+        password: this.password
+        }
+      this.$store.dispatch('signin', ['/signin', params])
+    }
   }
+}
 </script>
 
 <style>

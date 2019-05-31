@@ -48,69 +48,69 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VeeValidate from 'vee-validate'
+import Vue from 'vue'
+import VeeValidate from 'vee-validate'
 
-  Vue.use(VeeValidate)
+Vue.use(VeeValidate)
 
-  export default {
-    $_veeValidate: {
-      validator: 'new'
-    },
+export default {
+  $_veeValidate: {
+    validator: 'new'
+  },
 
-    data: () => ({
-      name: '',
-      email: '',
-      password: '',
-      // flash_message_dic
-      dictionary: {
-        attributes: {
-          email: 'E-mail Address'
+  data: () => ({
+    name: '',
+    email: '',
+    password: '',
+    // flash_message_dic
+    dictionary: {
+      attributes: {
+        email: 'E-mail Address'
+      },
+      custom: {
+        name: {
+          required: () => 'Name can not be empty',
+          max: 'The name field may not be greater than 10 characters'
+          // custom messages
         },
-        custom: {
-          name: {
-            required: () => 'Name can not be empty',
-            max: 'The name field may not be greater than 10 characters'
-            // custom messages
-          },
-          select: {
-            required: 'Select field is required'
-          }
+        select: {
+          required: 'Select field is required'
         }
       }
-    }),
+    }
+  }),
 
-    mounted () {
-      this.$validator.localize('en', this.dictionary)
+  mounted () {
+    this.$validator.localize('en', this.dictionary)
+  },
+
+  methods: {
+    submit () {
+      var judge
+      this.$validator.validateAll().then((result) => {
+        if(!result) {
+          alert(this.errors.all())
+          return
+        }
+        this.registerUser()
+      })
     },
-
-    methods: {
-      submit () {
-        var judge
-        this.$validator.validateAll().then((result) => {
-          if(!result) {
-            alert(this.errors.all())
-            return
-          }
-          this.registerUser()
-        })
-      },
-      clear () {
-        this.name = ''
-        this.email = ''
-        this.password = ''
-        this.$validator.reset()
-      },
-      registerUser() {
-        var params = {
-          name: this.name, 
-          email: this.email, 
-          password: this.password
-          }
-        this.$store.dispatch('signup', ['/users', params])
-      }
+    clear () {
+      this.name = ''
+      this.email = ''
+      this.password = ''
+      this.$validator.reset()
+    },
+    registerUser() {
+      var params = {
+        name: this.name, 
+        email: this.email, 
+        password: this.password
+        }
+      this.$store.dispatch('signup', ['/users', params])
     }
   }
+}
 </script>
 
 <style>

@@ -72,23 +72,23 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      e6: 1
-    }),
+export default {
+  data: () => ({
+    e6: 1
+  }),
 
-    computed: {
-      videoHeight() {
-        switch(this.$vuetify.breakpoint.name) {
-          case 'xs': return '130'
-          case 'sm': return '200'
-          case 'md': return '400'
-          case 'lg': return '400' 
-          case 'xl': return '400'
-        }
-      },
-    }
+  computed: {
+    videoHeight() {
+      switch(this.$vuetify.breakpoint.name) {
+        case 'xs': return '130'
+        case 'sm': return '200'
+        case 'md': return '400'
+        case 'lg': return '400' 
+        case 'xl': return '400'
+      }
+    },
   }
+}
 </script>
 
 <style scoped>

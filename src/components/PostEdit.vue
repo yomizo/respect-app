@@ -53,42 +53,36 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        comment: '',
-      }
+export default {
+  data () {
+    return {
+      comment: '',
+    }
+  },
+
+  computed: {
+    // defined vuex(store) variable
+    postData: {
+      get() { return this.$store.getters.postData }
     },
+    dialog: {
+      get() { return this.$store.getters.dialog },
+      set() { this.$store.dispatch('setDialog') }
+    },    
+  },
 
+  methods: {
+    editPost() {
+      let url = '/posts/' + this.postData.id
+      console.log(url)
+      this.$store.dispatch('editPost', [url, this.comment])
+    }
+  },
 
-    computed: {
-      // defined vuex(store) variable
-      postData: {
-        get() { return this.$store.getters.postData }
-      },
-      dialog: {
-        get() { return this.$store.getters.dialog },
-        set() { this.$store.dispatch('setDialog') }
-      },
-      
-    },
-
-
-    methods: {
-      // 
-      editPost() {
-        let url = '/posts/' + this.postData.id
-        console.log(url)
-        this.$store.dispatch('editPost', [url, this.comment])
-      }
-    },
-
-
-    created() {
-      this.comment = this.postData.comment
-    },
-  
-  }
+  created() {
+    this.comment = this.postData.comment
+  },
+}
 </script>
 
 <style>
